@@ -64,19 +64,6 @@ export function fromJEOL(buffer) {
     quantityName: 'relative intensity',
   };
 
-  if (info.dataSections.length === 4) {
-    data = {
-      re: {
-        re: data.reRe,
-        im: data.reIm,
-      },
-      im: {
-        re: data.imRe,
-        im: data.imIm,
-      },
-    };
-  }
-
   let dependentVariables = [];
   dependentVariables.push(
     new InternalDEPENDENTVAR(0, 11, options).fromReIm(data),
