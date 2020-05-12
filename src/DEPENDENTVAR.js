@@ -13,6 +13,20 @@ import { numericTypeTable, quantityTypeTable } from './constantTables';
  */
 export class DEPENDENTVAR {
   constructor(quantityType, numericType, options = {}) {
+    if (quantityType === true) {
+      const dependentVar = numericType;
+      this.numericType = dependentVar.numericType;
+      this.quantityType = dependentVar.quantityType;
+      this.name = dependentVar.name;
+      this.unit = dependentVar.unit;
+      this.quantityName = dependentVar.quantityName;
+      this.componentLabels = dependentVar.components;
+      this.sparseSampling = dependentVar.sparseSampling;
+      this.description = dependentVar.description;
+      this.application = dependentVar.application;
+      return;
+    }
+
     this.numericType = numericTypeTable[numericType];
     this.quantityType = quantityTypeTable[quantityType];
 
@@ -23,15 +37,35 @@ export class DEPENDENTVAR {
     this.sparseSampling = options.sparseSampling || {};
     this.description = options.description || '';
     this.application = options.application || {};
-  }
-  get() {
     return this;
+  }
+
+  static load(dependentVar) {
+    return new DEPENDENTVAR(true, dependentVar);
   }
 }
 
 export class InternalDEPENDENTVAR extends DEPENDENTVAR {
   constructor(quantityType, numericType, options = {}) {
     super();
+    if (quantityType === true) {
+      const dependentVar = numericType;
+      this.type = dependentVar.type;
+      this.encoding = dependentVar.encoding;
+      this.numericType = dependentVar.numericType;
+      this.quantityType = dependentVar.quantityType;
+      this.name = dependentVar.name;
+      this.unit = dependentVar.unit;
+      this.quantityName = dependentVar.quantityName;
+      this.componentLabels = dependentVar.components;
+      this.sparseSampling = dependentVar.sparseSampling;
+      this.description = dependentVar.description;
+      this.application = dependentVar.application;
+      this.components = dependentVar.components;
+      this.dataLength = dependentVar.dataLength;
+      return;
+    }
+
     this.type = 'internal';
     this.encoding = options.encoding || 'none';
     this.numericType = numericTypeTable[numericType];
@@ -48,9 +82,6 @@ export class InternalDEPENDENTVAR extends DEPENDENTVAR {
 
     this.components = [];
     this.dataLength = [];
-  }
-
-  get() {
     return this;
   }
 
@@ -158,5 +189,9 @@ export class InternalDEPENDENTVAR extends DEPENDENTVAR {
     if (this.encoding !== 'none') {
       throw new Error('no encoding supported yet');
     }
+  }
+
+  static load(dependentVar) {
+    return new InternalDEPENDENTVAR(true, dependentVar);
   }
 }

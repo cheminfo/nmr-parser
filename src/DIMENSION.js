@@ -18,10 +18,6 @@ export class DIMENSION {
   static load(dimension) {
     return new DIMENSION(true, dimension);
   }
-
-  toJSON() {
-    return this;
-  }
 }
 
 export class LinearDIMENSION extends DIMENSION {
@@ -30,6 +26,8 @@ export class LinearDIMENSION extends DIMENSION {
     if (label === true) {
       const dimension = count;
       this.label = dimension.label;
+      this.count = dimension.count;
+      this.increment = dimension.increment;
       this.type = dimension.type;
       this.description = dimension.description;
       this.application = dimension.application;

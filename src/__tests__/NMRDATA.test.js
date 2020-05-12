@@ -1,9 +1,8 @@
 import { Rutin } from 'jeol-data-test';
 
-import { DIMENSION, LinearDIMENSION } from '../DIMENSION';
 import { NMRDATA } from '../NMRDATA';
 
-describe.skip('test NMRDATA', () => {
+describe('test NMRDATA', () => {
   it('test dependentVariables fromJEOL and proton', () => {
     let data = new NMRDATA().fromJEOL(Rutin.experiment.proton).get();
     expect(data.dependentVariables[0].numericType).toStrictEqual('complex128');
@@ -109,51 +108,5 @@ describe.skip('test NMRDATA', () => {
     );
     expect(data.dependentVariables[0].components).toHaveLength(512);
     expect(data.dependentVariables[0].components[0]).toHaveLength(8192);
-  });
-});
-
-describe.skip('test NMRDATA load and toJSON', () => {
-  it('test load and toJSON with proton', () => {
-    let data = new NMRDATA().fromJEOL(Rutin.experiment.proton).get();
-    let txt = JSON.stringify(data.toJSON());
-    console.log(data);
-    let newData = NMRDATA.load(JSON.parse(txt));
-    console.log(newData);
-    expect(newData.dependentVariables[0].numericType).toStrictEqual(
-      'complex128',
-    );
-  });
-});
-
-describe('test DIMENSION', () => {
-  it('test DIMENSION load and toJSON with proton', () => {
-    let dim = new DIMENSION('label', {
-      type: 'linear',
-      description: 'description',
-    });
-    let txt = JSON.stringify(dim.toJSON());
-    let newDim = DIMENSION.load(JSON.parse(txt));
-    expect(newDim.label).toStrictEqual('label');
-    expect(newDim.type).toStrictEqual('linear');
-    expect(newDim.description).toStrictEqual('description');
-  });
-
-  it('test LinearDIMENSION load and toJSON with proton', () => {
-    let dim = new LinearDIMENSION(
-      'label',
-      10,
-      { magnitude: 1, unit: 's' },
-      {
-        type: 'linear',
-        description: 'description',
-        coordinatesOffest: 12,
-      },
-    );
-    let txt = JSON.stringify(dim.toJSON());
-    let newDim = LinearDIMENSION.load(JSON.parse(txt));
-    expect(newDim.label).toStrictEqual('label');
-    expect(newDim.type).toStrictEqual('linear');
-    expect(newDim.description).toStrictEqual('description');
-    expect(newDim.coordinatesOffest).toStrictEqual(12);
   });
 });
