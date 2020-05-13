@@ -21,7 +21,7 @@
     "type": "git",
     "url": "git+https://github.com/cheminfo/nmr-parser.git"
   },
-  "keywords": [],
+  "keywords": ["nmr", "magnetic resonance", "parser", "bruker", "JEOL"],
   "author": "Julien Wist",
   "license": "MIT",
   "bugs": {
