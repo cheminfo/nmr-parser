@@ -1,13 +1,5 @@
-import { DEPENDENTVAR, InternalDEPENDENTVAR } from './DEPENDENTVAR';
-import { DIMENSION, LinearDIMENSION } from './DIMENSION';
-import { NMRDATA } from './NMRDATA';
+import { formatDependentVariable } from './formatDependentVariable';
+import { formatLinearDimension } from './formatLinearDimension';
 import { fromJEOL } from './fromJEOL';
 
-export {
-  NMRDATA,
-  DIMENSION,
-  LinearDIMENSION,
-  DEPENDENTVAR,
-  InternalDEPENDENTVAR,
-  fromJEOL,
-};
+export { formatLinearDimension, formatDependentVariable, fromJEOL };

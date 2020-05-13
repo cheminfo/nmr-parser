@@ -1,10 +1,10 @@
 import { Rutin } from 'jeol-data-test';
 
-import { NMRDATA } from '../NMRDATA';
+import { fromJEOL } from '../fromJEOL';
 
-describe('test NMRDATA', () => {
+describe('test fromJEOL', () => {
   it('test dependentVariables fromJEOL and proton', () => {
-    let data = new NMRDATA().fromJEOL(Rutin.experiment.proton).get();
+    let data = fromJEOL(Rutin.experiment.proton);
     expect(data.dependentVariables[0].numericType).toStrictEqual('complex128');
     expect(data.dependentVariables[0].quantityType).toStrictEqual('scalar');
     expect(data.dependentVariables[0].dataLength).toHaveLength(1);
@@ -17,7 +17,7 @@ describe('test NMRDATA', () => {
   });
 
   it('test fromJEOL and processed proton', () => {
-    let data = new NMRDATA().fromJEOL(Rutin.experiment.processedProton).get();
+    let data = fromJEOL(Rutin.experiment.processedProton);
     expect(data.dependentVariables[0].numericType).toStrictEqual('complex128');
     expect(data.dependentVariables[0].quantityType).toStrictEqual('scalar');
     expect(data.dependentVariables[0].dataLength).toHaveLength(1);
@@ -34,7 +34,7 @@ describe('test NMRDATA', () => {
   });
 
   it('test dimensions fromJEOL and carbon', () => {
-    let data = new NMRDATA().fromJEOL(Rutin.experiment.carbon).get();
+    let data = fromJEOL(Rutin.experiment.carbon);
     expect(data.dimensions[0].label).toStrictEqual('Carbon13');
     expect(data.dimensions[0].type).toStrictEqual('linear');
     expect(data.dimensions[0].description).toStrictEqual('direct dimension');
@@ -49,7 +49,7 @@ describe('test NMRDATA', () => {
   });
 
   it('test dimensions fromJEOL and HMBC', () => {
-    let data = new NMRDATA().fromJEOL(Rutin.experiment.hmbc).get();
+    let data = fromJEOL(Rutin.experiment.hmbc);
     expect(data.dimensions[0].label).toStrictEqual('Proton');
     expect(data.dimensions[0].type).toStrictEqual('linear');
     expect(data.dimensions[0].description).toStrictEqual('direct dimension');
@@ -69,7 +69,7 @@ describe('test NMRDATA', () => {
   });
 
   it('test dimensions fromJEOL and COSY', () => {
-    let data = new NMRDATA().fromJEOL(Rutin.experiment.cosy).get();
+    let data = fromJEOL(Rutin.experiment.cosy);
     expect(data.dimensions[0].label).toStrictEqual('Proton');
     expect(data.dimensions[0].type).toStrictEqual('linear');
     expect(data.dimensions[0].description).toStrictEqual('direct dimension');
@@ -89,7 +89,7 @@ describe('test NMRDATA', () => {
   });
 
   it('test dimensions fromJEOL and HSQC', () => {
-    let data = new NMRDATA().fromJEOL(Rutin.experiment.hsqc).get();
+    let data = fromJEOL(Rutin.experiment.hsqc);
     expect(data.dimensions[0].label).toStrictEqual('Proton');
     expect(data.dimensions[0].type).toStrictEqual('linear');
     expect(data.dimensions[0].description).toStrictEqual('direct dimension');

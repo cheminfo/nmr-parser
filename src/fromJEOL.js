@@ -2,8 +2,8 @@ import { parseJEOL } from 'jeolconverter';
 
 import { version, dependencies, devDependencies } from '../package.json';
 
-import { InternalDEPENDENTVAR } from './DEPENDENTVAR';
-import { LinearDIMENSION } from './DIMENSION';
+import { formatDependentVariable } from './formatDependentVariable';
+import { formatLinearDimension } from './formatLinearDimension';
 
 export function fromJEOL(buffer) {
   let parsedData = parseJEOL(buffer);
@@ -50,7 +50,7 @@ export function fromJEOL(buffer) {
     }
 
     dimensions.push(
-      new LinearDIMENSION(
+      formatLinearDimension(
         headers.dataAxisTitles[d],
         info.dataPoints[d],
         increment,
@@ -65,9 +65,7 @@ export function fromJEOL(buffer) {
   };
 
   let dependentVariables = [];
-  dependentVariables.push(
-    new InternalDEPENDENTVAR(0, 11, options).fromReIm(data),
-  );
+  dependentVariables.push(formatDependentVariable(data, 11, options));
   let dataStructure = {
     timeStamp: new Date().valueOf(),
     version: [{ 'nmr-parser': version }, dependencies, devDependencies],
