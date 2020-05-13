@@ -14,7 +14,8 @@
     "prepublishOnly": "rollup -c",
     "test": "npm run test-coverage && npm run eslint",
     "test-coverage": "jest --coverage",
-    "test-only": "jest"
+    "test-only": "jest",
+    "build": "cheminfo-build --entry src/index.js --root nmr-parser"
   },
   "repository": {
     "type": "git",
