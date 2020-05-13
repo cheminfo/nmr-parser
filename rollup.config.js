@@ -5,8 +5,7 @@ const config = {
     format: 'cjs',
     exports: 'named',
   },
-  external: [],
+  external: ['jeolconverter'],
 };
 
 export default config;
-
