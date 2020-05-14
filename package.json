@@ -15,7 +15,7 @@
     "test": "npm run test-coverage && npm run eslint",
     "test-coverage": "jest --coverage",
     "test-only": "jest",
-    "build": "cheminfo-build --entry src/index.js --root nmr-parser"
+    "build": "cheminfo-build --entry src/index.js --root NMRparser"
   },
   "repository": {
     "type": "git",
