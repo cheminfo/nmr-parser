@@ -11,6 +11,14 @@ export function fromJEOL(buffer) {
   let info = parsedData.info;
   let data = parsedData.data;
 
+  let description = {
+    info,
+    metadata: {
+      headers,
+      parameters: parsedData.parameters,
+    },
+  };
+
   let dimensions = [];
   let options = {};
   let increment;
@@ -31,8 +39,24 @@ export function fromJEOL(buffer) {
         magnitude: info.acquisitionTime[d].magnitude / info.dataPoints[d],
         unit: 's',
       };
+      if (d === 0) {
+        options.coordinatesOffest = {
+          magnitude: info.digitalFilter * increment,
+          unit: 's',
+        };
+      }
     } else if (info.dataUnits[d] === 'Ppm') {
+      options.originOffset = {
+        magnitude: info.frequency[d].magnitude,
+        unit: 'Hz',
+      };
       options.quantityName = 'frequency';
+      options.coordinatesOffset = {
+        magnitude:
+          (info.frequencyOffset[d].magnitude * info.frequency[d].magnitude) /
+          1000000,
+        unit: 'Hz',
+      };
       increment = {
         magnitude: info.spectralWidth[d].magnitude / info.dataPoints[d],
         unit: 'Hz',
@@ -41,10 +65,6 @@ export function fromJEOL(buffer) {
 
     if (d === 0) {
       options.description = 'direct dimension';
-      options.coordinatesOffest = {
-        magnitude: info.digitalFilter * increment,
-        unit: 's',
-      };
     } else {
       options.description = 'indirect dimension';
     }
@@ -69,7 +89,8 @@ export function fromJEOL(buffer) {
   let dataStructure = {
     timeStamp: new Date().valueOf(),
     version: [{ 'nmr-parser': version }, dependencies, devDependencies],
-    description: `title: ${headers.title} / comment: ${headers.comment} / author:${headers.author} / site: ${headers.site}`,
+    // description: `title: ${headers.title} / comment: ${headers.comment} / author:${headers.author} / site: ${headers.site}`,
+    description,
     tags: ['magnetic resonance'].concat(info.nucleus),
     application: {},
     dimensions: dimensions,
