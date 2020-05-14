@@ -1,6 +1,6 @@
 {
   "name": "nmr-parser",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Read and convert any NMR file",
   "main": "lib/index.js",
   "module": "src/index.js",
