@@ -46,6 +46,7 @@
   },
   "devDependencies": {
     "@babel/plugin-transform-modules-commonjs": "^7.9.6",
+    "@rollup/plugin-json": "^4.0.3",
     "@types/jest": "^25.2.2",
     "cheminfo-build": "^1.1.1",
     "cheminfo-publish": "^1.0.10",
