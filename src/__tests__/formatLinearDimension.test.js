@@ -9,12 +9,12 @@ describe('test formatLinearDimension', () => {
       {
         type: 'linear',
         description: 'description',
-        coordinatesOffest: 12,
+        coordinatesOffset: 12,
       },
     );
     expect(dim.label).toStrictEqual('label');
     expect(dim.type).toStrictEqual('linear');
     expect(dim.description).toStrictEqual('description');
-    expect(dim.coordinatesOffest).toStrictEqual(12);
+    expect(dim.coordinatesOffset).toStrictEqual(12);
   });
 });

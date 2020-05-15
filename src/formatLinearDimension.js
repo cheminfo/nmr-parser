@@ -13,7 +13,7 @@ export function formatLinearDimension(label, count, increment, options = {}) {
     type: 'linear',
     description: String(options.description) || '',
     application: options.application || {},
-    coordinatesOffest: options.coordinatesOffest || 0,
+    coordinatesOffset: options.coordinatesOffset || 0,
     originOffset: options.originOffset || 0,
     quantityName: String(options.quantityName) || '',
     reciprocal: options.reciprocal || {},

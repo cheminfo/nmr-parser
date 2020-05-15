@@ -11,6 +11,9 @@ export function fromJEOL(buffer) {
   let info = parsedData.info;
   let data = parsedData.data;
 
+  info.title = `title: ${headers.title} / comment: ${headers.comment} / author:${headers.author} / site: ${headers.site}`;
+  info.nucleus = info.nucleus.map((x) => (x === 'Proton' ? '1H' : null));
+
   let description = {
     info,
     metadata: {
@@ -25,6 +28,15 @@ export function fromJEOL(buffer) {
   for (let d = 0; d < info.dataDimension; d++) {
     if (info.dataUnits[d] === 'Second') {
       options.quantityName = 'time';
+      options.originOffset = { magnitude: 0, unit: 's' };
+      if (d === 0) {
+        options.coordinatesOffest = {
+          magnitude: info.digitalFilter * increment,
+          unit: 's',
+        };
+      } else {
+        options.coordinatesOffest = { magnitude: 0, unit: 's' };
+      }
       options.reciprocal = {
         originOffset: { magnitude: info.frequency[d].magnitude, unit: 'Hz' },
         quantityName: 'frequency',
@@ -35,16 +47,11 @@ export function fromJEOL(buffer) {
           unit: 'Hz',
         },
       };
+
       increment = {
         magnitude: info.acquisitionTime[d].magnitude / info.dataPoints[d],
         unit: 's',
       };
-      if (d === 0) {
-        options.coordinatesOffest = {
-          magnitude: info.digitalFilter * increment,
-          unit: 's',
-        };
-      }
     } else if (info.dataUnits[d] === 'Ppm') {
       options.originOffset = {
         magnitude: info.frequency[d].magnitude,
@@ -86,10 +93,10 @@ export function fromJEOL(buffer) {
 
   let dependentVariables = [];
   dependentVariables.push(formatDependentVariable(data, 11, options));
+
   let dataStructure = {
     timeStamp: new Date().valueOf(),
     version: [{ 'nmr-parser': version }, dependencies, devDependencies],
-    // description: `title: ${headers.title} / comment: ${headers.comment} / author:${headers.author} / site: ${headers.site}`,
     description,
     tags: ['magnetic resonance'].concat(info.nucleus),
     application: {},

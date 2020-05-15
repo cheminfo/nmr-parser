@@ -26,6 +26,12 @@ describe('test fromJEOL', () => {
     expect(data.dependentVariables[0].components[0]).toHaveLength(524288);
     expect(data.dimensions[0].count).toStrictEqual(262144);
     expect(data.dimensions[0].quantityName).toStrictEqual('frequency');
+    expect(data.dimensions[0].originOffset.magnitude).toStrictEqual(
+      399782198.37825,
+    );
+    expect(data.dimensions[0].coordinatesOffset.magnitude).toStrictEqual(
+      2398.6931902694996,
+    );
     expect(data.dimensions[0].increment.magnitude).toStrictEqual(
       0.028587359604503898,
     );
