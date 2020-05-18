@@ -61,6 +61,6 @@
     "rollup": "^2.10.2"
   },
   "dependencies": {
-    "jeolconverter": "0.1.4"
+    "jeolconverter": "0.1.5"
   }
 }
