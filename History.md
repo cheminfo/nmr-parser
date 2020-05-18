@@ -1,3 +1,13 @@
+## [0.0.3](https://github.com/cheminfo/nmr-parser/compare/v0.0.2...v0.0.3) (2020-05-18)
+
+
+### Bug Fixes
+
+* problems with curation of the data and computation of the scale in processed data ([14f586b](https://github.com/cheminfo/nmr-parser/commit/14f586b1c55e78d34f6bea2cb47391b9856a7fbc))
+* problems with frequencyOffset ([52378d3](https://github.com/cheminfo/nmr-parser/commit/52378d37618fb3b386dde04346bce6ef8d10c307))
+
+
+
 ## [0.0.2](https://github.com/cheminfo/nmr-parser/compare/v0.0.1...v0.0.2) (2020-05-14)
 
 
