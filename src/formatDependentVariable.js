@@ -19,13 +19,15 @@ export function formatDependentVariable(data, numericType, options = {}) {
     quantityName = '',
     componentLabels = [],
     sparseSampling = {},
+    from = 0,
+    to = -1,
   } = options;
 
   let components;
   if (Array.isArray(data)) {
     throw new Error('not yet implemented');
   } else if (Object.keys(data).length === 2) {
-    components = fromReIm(data);
+    components = fromReIm(data, from, to);
   }
 
   if (componentLabels.length === 0) {
@@ -52,30 +54,37 @@ export function formatDependentVariable(data, numericType, options = {}) {
 /**
  * import object {re:[], im:[]} to component
  * @param {object} reIm - a reIm object to import
+ * @param {number} from - lower limit
+ * @param {number} to - upper limit
  * @return {array} - components
  */
-function fromReIm(reIm) {
+function fromReIm(reIm, from, to) {
   let dataLength = [];
   let componentLabels = [];
   let components = [];
   if (Array.isArray(reIm.re) & Array.isArray(reIm.im)) {
     if (typeof reIm.re[0] === 'number') {
-      dataLength[0] = reIm.re.length * 2;
+      // if 1D
+      dataLength[0] = setLengthComplex(from[0], to[0], reIm.re.length);
       let component = new Float64Array(dataLength[0]);
       for (let i = 0; i < dataLength[0]; i += 2) {
-        component[i] = reIm.re[i / 2];
-        component[i + 1] = reIm.im[i / 2];
+        let idx = i + from[0] * 2;
+        component[i] = reIm.re[idx / 2];
+        component[i + 1] = reIm.im[idx / 2];
       }
       components.push(component);
       componentLabels.push('complex');
     } else if (Array.isArray(reIm.re[0])) {
-      dataLength[0] = reIm.re.length;
-      dataLength[1] = reIm.re[0].length * 2;
+      // if 2D
+      dataLength[0] = setLength(from[1], to[1], reIm.re.length);
+      dataLength[1] = setLengthComplex(from[0], to[0], reIm.re[0].length);
+
       for (let j = 0; j < dataLength[0]; j++) {
         let component = new Float64Array(dataLength[1]);
         for (let i = 0; i < dataLength[1]; i += 2) {
-          component[i] = reIm.re[j][i / 2];
-          component[i + 1] = reIm.im[j][i / 2];
+          let idx = i + from[0] * 2;
+          component[i] = reIm.re[j][idx / 2];
+          component[i + 1] = reIm.im[j][idx / 2];
         }
         components.push(component);
       }
@@ -84,8 +93,8 @@ function fromReIm(reIm) {
     }
   } else if (Array.isArray(reIm.re.re)) {
     dataLength[0] = reIm.re.re.length * 2;
-    let re = fromReIm(reIm.re).components;
-    let im = fromReIm(reIm.im).components;
+    let re = fromReIm(reIm.re, from, to).components;
+    let im = fromReIm(reIm.im, from, to).components;
     for (let j = 0; j < dataLength[0] / 2; j++) {
       components.push(re[j]);
       components.push(im[j]);
@@ -99,6 +108,22 @@ function fromReIm(reIm) {
     componentLabels,
     components,
   };
+}
+
+function setLength(from, to, length) {
+  if (to - from + 1 < length) {
+    return to - from + 1;
+  } else {
+    return length;
+  }
+}
+
+function setLengthComplex(from, to, length) {
+  if (to - from + 1 < length) {
+    return (to - from + 1) * 2;
+  } else {
+    return length * 2;
+  }
 }
 
 // /**
