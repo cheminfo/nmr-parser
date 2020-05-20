@@ -1,3 +1,12 @@
+## [0.0.5](https://github.com/cheminfo/nmr-parser/compare/v0.0.4...v0.0.5) (2020-05-20)
+
+
+### Bug Fixes
+
+* set digitalFilter to 19 as suggested by JEOL ([c1cf39b](https://github.com/cheminfo/nmr-parser/commit/c1cf39b111510f2b6085ce93faa9d4294997d1b4))
+
+
+
 ## [0.0.4](https://github.com/cheminfo/nmr-parser/compare/v0.0.3...v0.0.4) (2020-05-20)
 
 
