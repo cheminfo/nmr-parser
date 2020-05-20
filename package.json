@@ -47,7 +47,7 @@
   "devDependencies": {
     "@babel/plugin-transform-modules-commonjs": "^7.9.6",
     "@rollup/plugin-json": "^4.0.3",
-    "@types/jest": "^25.2.2",
+    "@types/jest": "^25.2.3",
     "cheminfo-build": "^1.1.1",
     "cheminfo-publish": "^1.0.10",
     "eslint": "^7.0.0",
@@ -58,9 +58,11 @@
     "jeol-data-test": "0.2.3",
     "jest": "^26.0.1",
     "prettier": "^2.0.5",
-    "rollup": "^2.10.2"
+    "rollup": "^2.10.5"
   },
   "dependencies": {
+    "jcamp-data-test": "0.0.3",
+    "jcampconverter": "^5.0.2",
     "jeolconverter": "0.1.5"
   }
 }
