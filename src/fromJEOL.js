@@ -4,17 +4,21 @@ import { version, dependencies, devDependencies } from '../package.json';
 
 import { formatDependentVariable } from './formatDependentVariable';
 import { formatLinearDimension } from './formatLinearDimension';
+import { toKeyValue } from './utils';
 
 export function fromJEOL(buffer) {
   let parsedData = parseJEOL(buffer);
   let info = parsedData.info;
   let headers = parsedData.headers;
   let parameters = parsedData.parameters;
+  let paramArray = Object.assign({}, parameters.paramArray);
+  delete parameters.paramArray;
   let data = parsedData.data;
 
   // curation of parameters
-  info.title = `title: ${headers.title} / comment: ${headers.comment} / author:${headers.author} / site: ${headers.site}`;
-  info.nucleus = info.nucleus.map((x) => {
+  let newInfo = {};
+  newInfo.title = `title: ${headers.title} / comment: ${headers.comment} / author:${headers.author} / site: ${headers.site}`;
+  newInfo.nucleus = info.nucleus.map((x) => {
     if (x === 'Proton') {
       x = '1H';
     }
@@ -26,7 +30,35 @@ export function fromJEOL(buffer) {
     }
     return x;
   });
-  info.field = { magnitude: info.field.magnitude * 42.577478518, unit: 'MHz' };
+  newInfo.sampleName = info.sampleName;
+  newInfo.date = JSON.stringify(info.creationTime);
+  newInfo.author = info.author;
+  newInfo.comment = info.comment;
+  newInfo.solvent = info.solvent;
+  newInfo.temperature = info.temperature.magnitude;
+  newInfo.probeId = info.probeId;
+  newInfo.fieldStrength = info.field.magnitude;
+  newInfo.pulse = info.experiment;
+  newInfo.temperature = info.temperature.magnitude;
+  newInfo.digitalFilter = info.digitalFilter;
+
+  newInfo.isComplex = info.dataSections.includes('im');
+  newInfo.isFid = info.dataUnits[0] === 'Second';
+  newInfo.isFt = info.dataUnits[0] === 'Ppm';
+
+  newInfo.dimension = info.dataDimension;
+  newInfo.baseFrequency = info.frequency
+    .map((d) => d.magnitude / 1e6)
+    .slice(0, 1);
+  newInfo.numberOfPoints = info.dataPoints.slice(0, 1);
+  newInfo.offset = info.frequencyOffset
+    .map((f) => f.magnitude * newInfo.baseFrequency)
+    .slice(0, 1);
+  newInfo.acquisitionTime = info.acquisitionTime
+    .map((a) => a.magnitude)
+    .slice(0, 1);
+  newInfo.spectralWidth =
+    (info.spectralWidth[0].magnitude / info.frequency[0].magnitude) * 1e6;
 
   // set options for dimensions
   let dimensions = [];
@@ -37,12 +69,12 @@ export function fromJEOL(buffer) {
       options.quantityName = 'time';
       options.originOffset = { magnitude: 0, unit: 's' };
       if (d === 0) {
-        options.coordinatesOffest = {
+        options.coordinatesOffset = {
           magnitude: info.digitalFilter * increment,
           unit: 's',
         };
       } else {
-        options.coordinatesOffest = { magnitude: 0, unit: 's' };
+        options.coordinatesOffset = { magnitude: 0, unit: 's' };
       }
       options.reciprocal = {
         originOffset: { magnitude: info.frequency[d].magnitude, unit: 'Hz' },
@@ -115,17 +147,27 @@ export function fromJEOL(buffer) {
   dependentVariables.push(formatDependentVariable(data, 11, options));
 
   let description = {};
-  for (let key in info) {
-    description[key] = info[key];
+  for (let key in newInfo) {
+    description[key] = newInfo[key];
   }
-  description.metadata = { headers, parameters };
+
+  delete description.paramList;
+  description.metadata = Object.assign(
+    {},
+    toKeyValue(headers),
+    toKeyValue(parameters),
+    toKeyValue(paramArray),
+  );
 
   let dataStructure = {
     timeStamp: new Date().valueOf(),
     version: [{ 'nmr-parser': version }, dependencies, devDependencies],
     description,
-    tags: ['magnetic resonance'].concat(info.nucleus),
-    application: {},
+    tags: ['magnetic resonance'].concat(newInfo.nucleus),
+    application: {
+      spectralWidthClipped:
+        info.spectralWidthClipped[0].magnitude / newInfo.baseFrequency[0],
+    },
     dimensions: dimensions,
     dependentVariables: dependentVariables,
   };
