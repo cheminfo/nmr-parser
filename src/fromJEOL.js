@@ -40,7 +40,7 @@ export function fromJEOL(buffer) {
   newInfo.fieldStrength = info.field.magnitude;
   newInfo.pulse = info.experiment;
   newInfo.temperature = info.temperature.magnitude;
-  newInfo.digitalFilter = info.digitalFilter;
+  newInfo.digitalFilter = 19;
 
   newInfo.isComplex = info.dataSections.includes('im');
   newInfo.isFid = info.dataUnits[0] === 'Second';
