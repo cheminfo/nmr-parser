@@ -4,7 +4,7 @@ import { version, dependencies, devDependencies } from '../package.json';
 
 import { formatDependentVariable } from './formatDependentVariable';
 import { formatLinearDimension } from './formatLinearDimension';
-import { toKeyValue } from './utils';
+import { toKeyValue } from './utils/toKeyValue';
 
 export function fromJEOL(buffer) {
   let parsedData = parseJEOL(buffer);
@@ -33,38 +33,42 @@ export function fromJEOL(buffer) {
   newInfo.sampleName = info.sampleName;
   newInfo.date = JSON.stringify(info.creationTime);
   newInfo.author = info.author;
-  newInfo.comment = info.comment;
+  //newInfo.comment = info.comment;
   newInfo.solvent = info.solvent;
   newInfo.temperature = info.temperature.magnitude;
-  newInfo.probeId = info.probeId;
-  newInfo.fieldStrength = info.field.magnitude;
-  newInfo.pulse = info.experiment;
+  newInfo.probeName = info.probeId;
+  newInfo.fieldStrength = info.fieldStrength.magnitude;
+  newInfo.baseFrequency = info.fieldStrength.magnitude * 42.577478518;
+  newInfo.pulseSequence = info.experiment;
   newInfo.temperature = info.temperature.magnitude;
   newInfo.digitalFilter = 19;
+  newInfo.pulseStrength90 = 1 / (4 * info.pulseStrength90.magnitude);
+  newInfo.numberOfScans = info.numberOfScans;
+  newInfo.relaxationTime = info.relaxationTime;
 
   newInfo.isComplex = info.dataSections.includes('im');
   newInfo.isFid = info.dataUnits[0] === 'Second';
   newInfo.isFt = info.dataUnits[0] === 'Ppm';
 
-  newInfo.dimension = info.dataDimension;
-  newInfo.baseFrequency = info.frequency
+  newInfo.dimension = info.dimension;
+  newInfo.originFrequency = info.originFrequency
     .map((d) => d.magnitude / 1e6)
     .slice(0, 1);
   newInfo.numberOfPoints = info.dataPoints.slice(0, 1);
-  newInfo.offset = info.frequencyOffset
+  newInfo.frequencyOffset = info.frequencyOffset
     .map((f) => f.magnitude * newInfo.baseFrequency)
     .slice(0, 1);
   newInfo.acquisitionTime = info.acquisitionTime
     .map((a) => a.magnitude)
     .slice(0, 1);
   newInfo.spectralWidth =
-    (info.spectralWidth[0].magnitude / info.frequency[0].magnitude) * 1e6;
+    (info.spectralWidth[0].magnitude / info.originFrequency[0].magnitude) * 1e6;
 
   // set options for dimensions
   let dimensions = [];
   let options = {};
   let increment;
-  for (let d = 0; d < info.dataDimension; d++) {
+  for (let d = 0; d < info.dimension; d++) {
     if (info.dataUnits[d] === 'Second') {
       options.quantityName = 'time';
       options.originOffset = { magnitude: 0, unit: 's' };
@@ -77,11 +81,15 @@ export function fromJEOL(buffer) {
         options.coordinatesOffset = { magnitude: 0, unit: 's' };
       }
       options.reciprocal = {
-        originOffset: { magnitude: info.frequency[d].magnitude, unit: 'Hz' },
+        originOffset: {
+          magnitude: info.originFrequency[d].magnitude,
+          unit: 'Hz',
+        },
         quantityName: 'frequency',
         coordinatesOffset: {
           magnitude:
-            (info.frequencyOffset[d].magnitude * info.frequency[d].magnitude) /
+            (info.frequencyOffset[d].magnitude *
+              info.originFrequency[d].magnitude) /
             1000000,
           unit: 'Hz',
         },
@@ -94,7 +102,7 @@ export function fromJEOL(buffer) {
     } else if (info.dataUnits[d] === 'Ppm') {
       options.quantityName = 'frequency';
 
-      let origin = info.frequency[d].magnitude;
+      let origin = info.originFrequency[d].magnitude;
       options.originOffset = { magnitude: origin, unit: 'Hz' };
 
       let firstPoint = info.dataOffsetStart[0];
@@ -146,10 +154,12 @@ export function fromJEOL(buffer) {
   let dependentVariables = [];
   dependentVariables.push(formatDependentVariable(data, 11, options));
 
-  let description = {};
-  for (let key in newInfo) {
-    description[key] = newInfo[key];
-  }
+  // let description = {};
+  // for (let key in newInfo) {
+  //   description[key] = newInfo[key];
+  // }
+
+  let description = Object.assign({}, newInfo);
 
   delete description.paramList;
   description.metadata = Object.assign(

@@ -7,7 +7,7 @@ describe('test fromJEOL', () => {
     let data = fromJEOL(
       experiments['Rutin_3080ug200uL_DMSOd6_qHNMR_400MHz_Jeol.jdf'],
     );
-
+    //console.log(data.description);
     expect(data.description.nucleus[0]).toStrictEqual('1H');
     expect(data.description.fieldStrength).toStrictEqual(9.389766);
     expect(data.dependentVariables[0].numericType).toStrictEqual('complex128');

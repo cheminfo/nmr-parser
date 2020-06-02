@@ -1,5 +1,7 @@
 import { convert } from 'jcampconverter';
 
+import { getInfoFromJCAMP } from './utils/getInfoFromJCAMP';
+
 // import { version, dependencies, devDependencies } from '../package.json';
 
 // import { formatDependentVariable } from './formatDependentVariable';
@@ -7,14 +9,18 @@ import { convert } from 'jcampconverter';
 // import { toKeyValue } from './utils';
 
 export function fromJCAMP(buffer) {
-  let parsedData = convert(buffer);
+  let parsedData = convert(buffer, {
+    noContour: true,
+    xy: true,
+    keepRecordsRegExp: /.*/,
+    profiling: true,
+  });
   let dataStructure = [];
   let entries = parsedData.flatten;
-  console.log(parsedData);
   for (let entry of entries) {
     if ((entry.spectra && entry.spectra.length > 0) || entry.minMax) {
-      console.log(entry);
-      console.log(entry.spectra[0].data);
+      let info = getInfoFromJCAMP(entry.info);
+      dataStructure.push({ info });
     }
   }
 
