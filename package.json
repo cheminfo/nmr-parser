@@ -48,6 +48,7 @@
     "@babel/plugin-transform-modules-commonjs": "^7.9.6",
     "@rollup/plugin-json": "^4.0.3",
     "@types/jest": "^25.2.3",
+    "bruker-data-test": "0.0.2",
     "cheminfo-build": "^1.1.1",
     "cheminfo-publish": "^1.0.10",
     "eslint": "^7.0.0",
@@ -62,7 +63,8 @@
     "rollup": "^2.10.5"
   },
   "dependencies": {
+    "brukerconverter": "^2.1.2",
     "jcampconverter": "^5.0.2",
-    "jeolconverter": "0.1.5"
+    "jeolconverter": "0.1.6"
   }
 }

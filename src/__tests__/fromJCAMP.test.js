@@ -35,11 +35,9 @@ describe('test fromJCAMP', () => {
   });
 
   it('test fromJCAMP for Rutin (Jeol)', () => {
-    console.log(Object.keys(jcamp));
     let data = fromJCAMP(
       jcamp['Rutin_3080ug200uL_DMSOd6_qHNMR_400MHz_JDX.jdx'],
     );
-    console.log(data[0].info);
     let info = data[0].info;
     expect(info.nucleus[0]).toStrictEqual('1H');
     expect(info.title).toStrictEqual('Rutin_RUTI01_3080u200u');

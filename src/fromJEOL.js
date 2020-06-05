@@ -69,6 +69,10 @@ export function fromJEOL(buffer) {
   let options = {};
   let increment;
   for (let d = 0; d < info.dimension; d++) {
+    increment = {
+      magnitude: info.acquisitionTime[d].magnitude / (info.dataPoints[d] - 1),
+      unit: 's',
+    };
     if (info.dataUnits[d] === 'Second') {
       options.quantityName = 'time';
       options.originOffset = { magnitude: 0, unit: 's' };
@@ -93,11 +97,6 @@ export function fromJEOL(buffer) {
             1000000,
           unit: 'Hz',
         },
-      };
-
-      increment = {
-        magnitude: info.acquisitionTime[d].magnitude / (info.dataPoints[d] - 1),
-        unit: 's',
       };
     } else if (info.dataUnits[d] === 'Ppm') {
       options.quantityName = 'frequency';
