@@ -16,16 +16,20 @@ export function fromJCAMP(buffer) {
   for (let entry of entries) {
     if ((entry.spectra && entry.spectra.length > 0) || entry.minMax) {
       let info = getInfoFromJCAMP(entry.info);
-      let dependentVariables = [
-        {
-          components: entry.spectra,
-        },
-      ];
       let dimensions = [];
+      let dependentVariables = [];
+
+      let dependentVariable = {};
+      if (info.dimension === 1) {
+        dependentVariable.components = entry.spectra;
+      } else if (info.dimension === 2) {
+        dependentVariable.components = entry.minMax;
+      }
       let dimension = {
         increment: info.increment,
-        dataPoints: info.dataPoints,
+        numberOfPoints: info.numberOfPoints,
       };
+
       if (info.fid) {
         dimension.coordinatesOffset = {
           magnitude: -info.digitalFilter * info.increment,
@@ -38,7 +42,9 @@ export function fromJCAMP(buffer) {
           units: 'ppm',
         };
       }
+
       dimensions.push(dimension);
+      dependentVariables.push(dependentVariable);
       dataStructure.push({
         dimensions,
         dependentVariables,
