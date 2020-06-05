@@ -1,12 +1,8 @@
 import { convert } from 'jcampconverter';
 
+import { version, dependencies, devDependencies } from '../package.json';
+
 import { getInfoFromJCAMP } from './utils/getInfoFromJCAMP';
-
-// import { version, dependencies, devDependencies } from '../package.json';
-
-// import { formatDependentVariable } from './formatDependentVariable';
-// import { formatLinearDimension } from './formatLinearDimension';
-// import { toKeyValue } from './utils';
 
 export function fromJCAMP(buffer) {
   let parsedData = convert(buffer, {
@@ -20,7 +16,36 @@ export function fromJCAMP(buffer) {
   for (let entry of entries) {
     if ((entry.spectra && entry.spectra.length > 0) || entry.minMax) {
       let info = getInfoFromJCAMP(entry.info);
-      dataStructure.push({ info });
+      let dependentVariables = [
+        {
+          components: entry.spectra,
+        },
+      ];
+      let dimensions = [];
+      let dimension = {
+        increment: info.increment,
+        dataPoints: info.dataPoints,
+      };
+      if (info.fid) {
+        dimension.coordinatesOffset = {
+          magnitude: -info.digitalFilter * info.increment,
+          units: 'second',
+        };
+      } else {
+        dimension.coordinatesOffset = {
+          magnitude:
+            info.frequencyOffset / info.baseFrequency - 0.5 * info.spectraWidth,
+          units: 'ppm',
+        };
+      }
+      dimensions.push(dimension);
+      dataStructure.push({
+        dimensions,
+        dependentVariables,
+        info,
+        timeStamp: new Date().valueOf(),
+        version: [{ 'nmr-parser': version }, dependencies, devDependencies],
+      });
     }
   }
 
