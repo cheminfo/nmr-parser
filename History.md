@@ -1,3 +1,17 @@
+# [0.1.0](https://github.com/cheminfo/nmr-parser/compare/v0.0.6...v0.1.0) (2020-06-09)
+
+
+### Bug Fixes
+
+* 2D exportation ([805af19](https://github.com/cheminfo/nmr-parser/commit/805af192e61ee0ab98ec3b2823e268cbfd79481c))
+
+
+### Features
+
+* **fromBruker:** initialized fromBruker function ([a5d8137](https://github.com/cheminfo/nmr-parser/commit/a5d8137ad924a926c82596dbd0cdcd433ca8646b))
+
+
+
 ## [0.0.5](https://github.com/cheminfo/nmr-parser/compare/v0.0.4...v0.0.5) (2020-05-20)
 
 
