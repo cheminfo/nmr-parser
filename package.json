@@ -1,6 +1,6 @@
 {
   "name": "nmr-parser",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Read and convert any NMR file",
   "main": "lib/index.js",
   "module": "src/index.js",
@@ -62,7 +62,7 @@
     "jeol-data-test": "^0.2.3",
     "jest": "^26.1.0",
     "prettier": "^2.0.5",
-    "rollup": "^2.18.0"
+    "rollup": "^2.18.1"
   },
   "dependencies": {
     "brukerconverter": "^2.1.2",
