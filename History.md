@@ -1,3 +1,7 @@
+## [0.2.2](https://github.com/cheminfo/nmr-parser/compare/v0.2.1...v0.2.2) (2020-06-27)
+
+
+
 # [0.1.0](https://github.com/cheminfo/nmr-parser/compare/v0.0.6...v0.1.0) (2020-06-09)
 
 
