@@ -21,8 +21,6 @@ export function getInfoFromJCAMP(metaData) {
   }
 
   if (creator === 'mnova') {
-    let a = metaData.$PARAMETERFILE[1].split(separator).slice(1, 247).join('');
-    let b = new Buffer(a, 'base64');
     if (metaData.LONGDATE) {
       info.date = metaData.LONGDATE;
     }
