@@ -60,7 +60,7 @@ export function getInfoFromJCAMP(metaData) {
       maybeAdd(info, 'acquisitionMode', parseInt(metaData.$FNTYPE, 10));
     }
     // //maybeAdd(info, 'expno', parseInt(metaData.$EXPNO, 10));
-    let varName = metaData.VARNAME.split(',')[0];
+    let varName = metaData.VARNAME ? metaData.VARNAME.split(',')[0] : '';
     if (varName === 'TIME') {
       maybeAdd(info, 'acquisitionTime', Number(metaData.LAST.split(',')[0]));
     }
