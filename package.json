@@ -65,7 +65,7 @@
     "rollup": "^2.18.1"
   },
   "dependencies": {
-    "brukerconverter": "^2.1.2",
+    "brukerconverter": "^3.0.0",
     "jcampconverter": "^5.0.2",
     "jeolconverter": "0.1.6"
   }
