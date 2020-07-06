@@ -1,6 +1,7 @@
+import { gyromagneticRatio } from 'nmr-processing';
+import { getSpectrumType } from './getSpectrumType';
 import { getDigitalFilterParameters } from './getDigitalFilterParameters';
 import { getNucleusFrom2DExperiment } from './getNucleusFrom2DExperiment';
-import { getSpectrumType } from './getSpectrumType';
 
 export function getInfoFromJCAMP(metaData) {
   const info = {
@@ -83,11 +84,13 @@ export function getInfoFromJCAMP(metaData) {
   maybeAdd(info, 'originFrequency', metaData['.OBSERVEFREQUENCY']);
 
   if (creator === 'bruker') {
+    const gyromagneticRatioConst = gyromagneticRatio[info.nucleus[0]];
     maybeAdd(info, 'probeName', metaData.$PROBHD);
     maybeAdd(info, 'originFrequency', metaData.$SFO1);
     maybeAdd(info, 'baseFrequency', metaData.$BF1);
     const { baseFrequency, originFrequency } = info;
-    let fieldStrength = baseFrequency.map((bf) => bf / 42.577478518);
+    let fieldStrength =
+      2 * Math.PI * (baseFrequency[0] / gyromagneticRatioConst) * 1e6;
     let frequencyOffset = baseFrequency.map(
       (bf, i) => (originFrequency[i] - bf) * 1e6,
     );
