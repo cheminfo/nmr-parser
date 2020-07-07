@@ -114,7 +114,9 @@ export function getInfoFromJCAMP(metaData) {
       maybeAdd(
         info,
         'acquisitionTime',
-        Number(numberOfPoints[0] / (2 * spectralWidth[0] * originFrequency[0])),
+        Number(
+          (numberOfPoints[0] - 1) / (2 * spectralWidth[0] * originFrequency[0]),
+        ),
       );
     }
 
