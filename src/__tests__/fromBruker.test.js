@@ -32,6 +32,6 @@ describe('test fromBruker', () => {
     expect(info.numberOfPoints).toStrictEqual(16384);
     expect(info.frequencyOffset).toBeCloseTo(2250.974999981281, 5);
     expect(info.spectralWidth).toBeCloseTo(15.9572055821827, 5);
-    expect(info.acquisitionTime).toBeCloseTo(1.7104898, 5);
+    expect(info.acquisitionTime).toBeCloseTo(1.7103852, 5);
   });
 });

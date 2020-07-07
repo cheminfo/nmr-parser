@@ -8,7 +8,7 @@ describe('test fromJCAMP', () => {
     let info = data[0].info;
     expect(info.nucleus[0]).toStrictEqual('1H');
     expect(info.title).toStrictEqual('1H BBI');
-    expect(info.sampleName).toStrictEqual('nesEX14_CM');
+    expect(info.sampleName).toStrictEqual('nesEX14_CMC');
     // expect(info.author).toStrictEqual('');
     expect(info.date).toStrictEqual('2006-01-31T09:24:52.000Z');
     expect(info.solvent).toStrictEqual('CDCl3');
