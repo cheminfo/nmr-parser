@@ -49,6 +49,7 @@ export function fromJCAMP(buffer) {
         dimensions,
         dependentVariables,
         info,
+        meta: entry.info,
         timeStamp: new Date().valueOf(),
         version: [{ 'nmr-parser': version }, dependencies, devDependencies],
       });

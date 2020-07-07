@@ -1,4 +1,5 @@
 import { parseJEOL } from 'jeolconverter';
+import { gyromagneticRatio } from 'nmr-processing';
 
 import { version, dependencies, devDependencies } from '../package.json';
 
@@ -38,7 +39,13 @@ export function fromJEOL(buffer) {
   newInfo.temperature = info.temperature.magnitude;
   newInfo.probeName = info.probeId;
   newInfo.fieldStrength = info.fieldStrength.magnitude;
-  newInfo.baseFrequency = info.fieldStrength.magnitude * 42.577478518;
+
+  const gyromagneticRatioConstant = gyromagneticRatio['1H'];
+  newInfo.baseFrequency =
+    2 *
+    Math.PI *
+    (info.fieldStrength.magnitude / gyromagneticRatioConstant) *
+    1e6;
   newInfo.pulseSequence = info.experiment;
   newInfo.temperature = info.temperature.magnitude;
   newInfo.digitalFilter = 19;

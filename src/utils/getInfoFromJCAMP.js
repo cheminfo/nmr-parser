@@ -1,3 +1,5 @@
+import { gyromagneticRatio } from 'nmr-processing';
+
 import { getDigitalFilterParameters } from './getDigitalFilterParameters';
 import { getNucleusFrom2DExperiment } from './getNucleusFrom2DExperiment';
 import { getSpectrumType } from './getSpectrumType';
@@ -11,7 +13,7 @@ export function getInfoFromJCAMP(metaData) {
     isComplex: false,
   };
   const separator = JSON.stringify(metaData).match('\r\n') ? '\r\n' : '\n';
-  let creator = metaData.JCAMPDX.toLowerCase();
+  let creator = metaData.JCAMPDX.toLowerCase() + metaData.ORIGIN.toLowerCase();
 
   if (creator.includes('mestre') || creator.includes('nova')) {
     creator = 'mnova';
@@ -25,73 +27,7 @@ export function getInfoFromJCAMP(metaData) {
       info.date = metaData.LONGDATE;
     }
   }
-
-  maybeAdd(info, 'title', metaData.TITLE);
-  maybeAdd(info, 'solvent', metaData['.SOLVENTNAME']);
-  maybeAdd(info, 'temperature', parseFloat(metaData.$TE || metaData['.TE']));
-  maybeAdd(info, 'type', metaData.DATATYPE);
-  maybeAdd(
-    info,
-    'pulseSequence',
-    metaData['.PULSESEQUENCE'] || metaData['.PULPROG'] || metaData.$PULPROG,
-  );
-  maybeAdd(info, 'experiment', getSpectrumType(info, metaData));
-
-  maybeAdd(
-    info,
-    'originFrequency',
-    metaData['.OBSERVEFREQUENCY']
-      ? parseFloat(metaData['.OBSERVEFREQUENCY'])
-      : parseFloat(metaData.$SFO1),
-  );
-
-  if (creator === 'bruker') {
-    maybeAdd(info, 'probeName', metaData.$PROBHD);
-    maybeAdd(info, 'baseFrequency', Number(metaData.$BF1));
-    maybeAdd(info, 'fieldStrength', Number(metaData.$BF1) / 42.577478518);
-    maybeAdd(info, 'frequencyOffset', (metaData.$SFO1 - metaData.$BF1) * 1e6);
-    maybeAdd(info, 'spectralWidth', Number(metaData.$SW));
-    maybeAdd(info, 'numberOfPoints', Number(metaData.$TD));
-    maybeAdd(info, 'sampleName', metaData.$NAME);
-
-    if (metaData.$FNTYPE !== undefined) {
-      maybeAdd(info, 'acquisitionMode', parseInt(metaData.$FNTYPE, 10));
-    }
-    // //maybeAdd(info, 'expno', parseInt(metaData.$EXPNO, 10));
-    let varName = metaData.VARNAME ? metaData.VARNAME.split(',')[0] : '';
-    if (varName === 'TIME') {
-      maybeAdd(info, 'acquisitionTime', Number(metaData.LAST.split(',')[0]));
-    }
-
-    let pulseStrength =
-      1e6 / (metaData.$P.split(separator)[1].split(' ')[1] * 4);
-    maybeAdd(info, 'pulseStrength90', pulseStrength);
-    let relaxationTime = metaData.$D.split(separator)[1].split(' ')[1];
-    maybeAdd(info, 'relaxationTime', Number(relaxationTime));
-    maybeAdd(info, 'numberOfScans', Number(metaData.$NS));
-
-    if (info.type) {
-      if (info.type.toUpperCase().indexOf('FID') >= 0) {
-        info.isFid = true;
-      } else if (info.type.toUpperCase().indexOf('SPECTRUM') >= 0) {
-        info.isFt = true;
-      }
-    }
-
-    if (info.isFid) {
-      let digitalFilterParameters = getDigitalFilterParameters(
-        metaData.$GRPDLY,
-        metaData.$DSPFVS,
-        metaData.$DECIM,
-      );
-      maybeAdd(info, 'digitalFilter', digitalFilterParameters);
-    }
-
-    if (metaData.$DATE) {
-      info.date = new Date(metaData.$DATE * 1000).toISOString();
-    }
-  }
-
+  creator = 'bruker';
   // eslint-disable-next-line dot-notation
   if (metaData['$NUC1']) {
     // eslint-disable-next-line dot-notation
@@ -125,6 +61,97 @@ export function getInfoFromJCAMP(metaData) {
 
   info.dimension = info.nucleus.length;
 
+  maybeAdd(info, 'title', metaData.TITLE);
+  maybeAdd(info, 'solvent', metaData['.SOLVENTNAME']);
+  maybeAdd(info, 'temperature', metaData.$TE || metaData['.TE']);
+  maybeAdd(info, 'type', metaData.DATATYPE);
+
+  if (info.type) {
+    let typeLowerCase = info.type[0].toUpperCase();
+    if (typeLowerCase.indexOf('FID') >= 0) {
+      info.isFid = true;
+    } else if (typeLowerCase.indexOf('SPECTRUM') >= 0) {
+      info.isFt = true;
+    }
+  }
+
+  maybeAdd(
+    info,
+    'pulseSequence',
+    metaData['.PULSESEQUENCE'] || metaData['.PULPROG'] || metaData.$PULPROG,
+  );
+  maybeAdd(info, 'experiment', getSpectrumType(info, metaData));
+
+  maybeAdd(info, 'originFrequency', metaData['.OBSERVEFREQUENCY']);
+
+  if (creator === 'bruker') {
+    const gyromagneticRatioConst = gyromagneticRatio[info.nucleus[0]];
+    maybeAdd(info, 'probeName', metaData.$PROBHD);
+    maybeAdd(info, 'originFrequency', metaData.$SFO1);
+    maybeAdd(info, 'baseFrequency', metaData.$BF1);
+    const { baseFrequency, originFrequency } = info;
+    let fieldStrength =
+      2 * Math.PI * (baseFrequency[0] / gyromagneticRatioConst) * 1e6;
+    let frequencyOffset = baseFrequency.map(
+      (bf, i) => (originFrequency[i] - bf) * 1e6,
+    );
+
+    maybeAdd(info, 'fieldStrength', fieldStrength);
+    maybeAdd(info, 'frequencyOffset', frequencyOffset);
+    maybeAdd(info, 'spectralWidth', metaData.$SW);
+    maybeAdd(info, 'numberOfPoints', metaData.$TD);
+    maybeAdd(info, 'sampleName', metaData.$NAME);
+
+    if (metaData.$FNTYPE !== undefined) {
+      maybeAdd(info, 'acquisitionMode', parseInt(metaData.$FNTYPE, 10));
+    }
+    let varName = metaData.VARNAME ? metaData.VARNAME.split(',')[0] : '';
+    if (varName === 'TIME') {
+      maybeAdd(info, 'acquisitionTime', Number(metaData.LAST.split(',')[0]));
+    }
+
+    const { numberOfPoints, spectralWidth } = info;
+    if (!info.acquisitionTime) {
+      maybeAdd(
+        info,
+        'acquisitionTime',
+        Number(
+          (numberOfPoints[0] - 1) / (2 * spectralWidth[0] * originFrequency[0]),
+        ),
+      );
+    }
+
+    let pulseStrength =
+      1e6 / (metaData.$P.split(separator)[1].split(' ')[1] * 4);
+    maybeAdd(info, 'pulseStrength90', pulseStrength);
+    let relaxationTime = metaData.$D.split(separator)[1].split(' ')[1];
+    maybeAdd(info, 'relaxationTime', Number(relaxationTime));
+    maybeAdd(info, 'numberOfScans', Number(metaData.$NS));
+
+    let increment;
+    if (info.isFid) {
+      let digitalFilterParameters = getDigitalFilterParameters(
+        metaData.$GRPDLY,
+        metaData.$DSPFVS,
+        metaData.$DECIM,
+      );
+      maybeAdd(info, 'digitalFilter', digitalFilterParameters);
+      increment = numberOfPoints.map((nb) => {
+        return info.acquisitionTime[0] / (nb - 1);
+      });
+    } else {
+      increment = numberOfPoints.map((nb, i) => {
+        return spectralWidth[i] / (nb - 1);
+      });
+    }
+
+    maybeAdd(info, 'increment', increment);
+
+    if (metaData.$DATE) {
+      info.date = new Date(parseInt(metaData.$DATE, 10) * 1000).toISOString();
+    }
+  }
+
   if (metaData.SYMBOL) {
     let symbols = metaData.SYMBOL.split(/[, ]+/);
     if (symbols.includes('R') && symbols.includes('I')) {
@@ -132,18 +159,31 @@ export function getInfoFromJCAMP(metaData) {
     }
   }
 
+  for (let key in info) {
+    if (info[key].length === 1) info[key] = info[key][0];
+  }
   return info;
 }
 
 function maybeAdd(obj, name, value) {
   if (value !== undefined) {
-    if (typeof value === 'string') {
-      if (value.startsWith('<') && value.endsWith('>')) {
-        value = value.substring(1, value.length - 2);
-      }
-      obj[name] = value.trim();
+    if (Array.isArray(value)) {
+      obj[name] = value.map((v) => {
+        return removeUnless(v);
+      });
     } else {
-      obj[name] = value;
+      obj[name] = [removeUnless(value)];
     }
   }
+}
+
+function removeUnless(value) {
+  if (typeof value === 'string') {
+    if (value.startsWith('<') && value.endsWith('>')) {
+      value = value.substring(1, value.length - 2);
+    }
+    value = value.trim();
+  }
+  const valueAsNumber = parseFloat(value);
+  return isNaN(valueAsNumber) ? value : valueAsNumber;
 }

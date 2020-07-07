@@ -2,7 +2,7 @@ import { convertZip as convertBruker } from 'brukerconverter';
 
 import { version, dependencies, devDependencies } from '../package.json';
 
-import { getInfoFromBruker } from './utils/getInfoFromBruker';
+import { getInfoFromJCAMP } from './utils/getInfoFromJCAMP';
 
 const defaultOptions = {
   noContour: true,
@@ -19,8 +19,7 @@ export async function fromBruker(zipFile, options = {}) {
   let dataStructure = [];
   for (let element of parseData) {
     let entry = element.value;
-    let info = getInfoFromBruker(entry.info);
-    info = Object.assign({}, entry.info, info);
+    let info = getInfoFromJCAMP(entry.info);
     let dimensions = [];
     let dependentVariables = [];
 
@@ -51,11 +50,11 @@ export async function fromBruker(zipFile, options = {}) {
 
     dimensions.push(dimension);
     dependentVariables.push(dependentVariable);
-
     dataStructure.push({
       dimensions,
       dependentVariables,
       info,
+      meta: entry.info,
       timeStamp: new Date().valueOf(),
       version: [{ 'nmr-parser': version }, dependencies, devDependencies],
     });
