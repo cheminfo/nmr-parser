@@ -1,7 +1,8 @@
 import { gyromagneticRatio } from 'nmr-processing';
-import { getSpectrumType } from './getSpectrumType';
+
 import { getDigitalFilterParameters } from './getDigitalFilterParameters';
 import { getNucleusFrom2DExperiment } from './getNucleusFrom2DExperiment';
+import { getSpectrumType } from './getSpectrumType';
 
 export function getInfoFromJCAMP(metaData) {
   const info = {
