@@ -40,10 +40,12 @@ export function fromJEOL(buffer) {
   newInfo.probeName = info.probeId;
   newInfo.fieldStrength = info.fieldStrength.magnitude;
 
-  const gyromagneticRatioConstant = gyromagneticRatio['1H'];
-  newInfo.baseFrequency =
-    (info.fieldStrength.magnitude * gyromagneticRatioConstant) /
-    (2 * Math.PI * 1e6);
+  let gyromagneticRatioConstants = newInfo.nucleus.map(
+    (nucleus) => gyromagneticRatio[nucleus],
+  );
+  newInfo.baseFrequency = gyromagneticRatioConstants.map(
+    (gmr) => (info.fieldStrength.magnitude * gmr) / (2 * Math.PI * 1e6),
+  );
   newInfo.pulseSequence = info.experiment;
   newInfo.temperature = info.temperature.magnitude;
   newInfo.digitalFilter = 19;
@@ -56,18 +58,31 @@ export function fromJEOL(buffer) {
   newInfo.isFt = info.dataUnits[0] === 'Ppm';
 
   newInfo.dimension = info.dimension;
+
+  const dimension = newInfo.dimension;
   newInfo.originFrequency = info.originFrequency
     .map((d) => d.magnitude / 1e6)
-    .slice(0, 1);
+    .slice(0, dimension);
   newInfo.numberOfPoints = info.dataPoints.slice(0, 1);
   newInfo.frequencyOffset = info.frequencyOffset
-    .map((f) => f.magnitude * newInfo.baseFrequency)
-    .slice(0, 1);
+    .map((f, i) => f.magnitude * newInfo.baseFrequency[i])
+    .slice(0, dimension);
   newInfo.acquisitionTime = info.acquisitionTime
     .map((a) => a.magnitude)
-    .slice(0, 1);
-  newInfo.spectralWidth =
-    (info.spectralWidth[0].magnitude / info.originFrequency[0].magnitude) * 1e6;
+    .slice(0, dimension);
+  newInfo.spectralWidth = info.spectralWidth
+    .map((sw, i) => (sw.magnitude / info.originFrequency[i].magnitude) * 1e6)
+    .slice(0, dimension);
+
+  if (dimension === 1) {
+    [
+      'spectralWidth',
+      'acquisitionTime',
+      'frequencyOffset',
+      'numberOfPoints',
+      'originFrequency',
+    ].forEach((key) => (newInfo[key] = [newInfo[key]]));
+  }
 
   // set options for dimensions
   let dimensions = [];
@@ -181,7 +196,7 @@ export function fromJEOL(buffer) {
     tags: ['magnetic resonance'].concat(newInfo.nucleus),
     application: {
       spectralWidthClipped:
-        info.spectralWidthClipped[0].magnitude / newInfo.baseFrequency,
+        info.spectralWidthClipped[0].magnitude / newInfo.baseFrequency[0],
     },
     dimensions: dimensions,
     dependentVariables: dependentVariables,
