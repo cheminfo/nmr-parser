@@ -42,10 +42,8 @@ export function fromJEOL(buffer) {
 
   const gyromagneticRatioConstant = gyromagneticRatio['1H'];
   newInfo.baseFrequency =
-    2 *
-    Math.PI *
-    (info.fieldStrength.magnitude / gyromagneticRatioConstant) *
-    1e6;
+    (info.fieldStrength.magnitude * gyromagneticRatioConstant) /
+    (2 * Math.PI * 1e6);
   newInfo.pulseSequence = info.experiment;
   newInfo.temperature = info.temperature.magnitude;
   newInfo.digitalFilter = 19;
@@ -83,9 +81,10 @@ export function fromJEOL(buffer) {
     if (info.dataUnits[d] === 'Second') {
       options.quantityName = 'time';
       options.originOffset = { magnitude: 0, unit: 's' };
+
       if (d === 0) {
         options.coordinatesOffset = {
-          magnitude: info.digitalFilter * increment,
+          magnitude: info.digitalFilter * increment.magnitude,
           unit: 's',
         };
       } else {
@@ -182,7 +181,7 @@ export function fromJEOL(buffer) {
     tags: ['magnetic resonance'].concat(newInfo.nucleus),
     application: {
       spectralWidthClipped:
-        info.spectralWidthClipped[0].magnitude / newInfo.baseFrequency[0],
+        info.spectralWidthClipped[0].magnitude / newInfo.baseFrequency,
     },
     dimensions: dimensions,
     dependentVariables: dependentVariables,

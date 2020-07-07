@@ -27,7 +27,6 @@ export function getInfoFromJCAMP(metaData) {
       info.date = metaData.LONGDATE;
     }
   }
-  creator = 'bruker';
   // eslint-disable-next-line dot-notation
   if (metaData['$NUC1']) {
     // eslint-disable-next-line dot-notation
@@ -60,7 +59,6 @@ export function getInfoFromJCAMP(metaData) {
   }
 
   info.dimension = info.nucleus.length;
-
   maybeAdd(info, 'title', metaData.TITLE);
   maybeAdd(info, 'solvent', metaData['.SOLVENTNAME']);
   maybeAdd(info, 'temperature', metaData.$TE || metaData['.TE']);
@@ -70,8 +68,10 @@ export function getInfoFromJCAMP(metaData) {
     let typeLowerCase = info.type[0].toUpperCase();
     if (typeLowerCase.indexOf('FID') >= 0) {
       info.isFid = true;
+      info.isComplex = true;
     } else if (typeLowerCase.indexOf('SPECTRUM') >= 0) {
       info.isFt = true;
+      info.isComplex = true;
     }
   }
 
@@ -150,6 +150,10 @@ export function getInfoFromJCAMP(metaData) {
     if (metaData.$DATE) {
       info.date = new Date(parseInt(metaData.$DATE, 10) * 1000).toISOString();
     }
+
+    if (!info.solvent) {
+      maybeAdd(info, 'solvent', metaData.$SOLVENT);
+    }
   }
 
   if (metaData.SYMBOL) {
@@ -162,6 +166,9 @@ export function getInfoFromJCAMP(metaData) {
   for (let key in info) {
     if (info[key].length === 1) info[key] = info[key][0];
   }
+
+  if (!Array.isArray(info.nucleus)) info.nucleus = [info.nucleus];
+
   return info;
 }
 
@@ -180,10 +187,9 @@ function maybeAdd(obj, name, value) {
 function removeUnless(value) {
   if (typeof value === 'string') {
     if (value.startsWith('<') && value.endsWith('>')) {
-      value = value.substring(1, value.length - 2);
+      value = value.substring(1, value.length - 1);
     }
     value = value.trim();
   }
-  const valueAsNumber = parseFloat(value);
-  return isNaN(valueAsNumber) ? value : valueAsNumber;
+  return value.match && value.match(/[A-Za-z]/g) ? value : parseFloat(value);
 }
