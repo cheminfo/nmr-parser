@@ -1,3 +1,12 @@
+## [0.2.4](https://github.com/cheminfo/nmr-parser/compare/v0.2.3...v0.2.4) (2020-07-08)
+
+
+### Bug Fixes
+
+* correct exportation of solvent name ([9a1f2b2](https://github.com/cheminfo/nmr-parser/commit/9a1f2b298dca989d1a2e63cb41bfd3f81897b30e))
+
+
+
 ## [0.2.3](https://github.com/cheminfo/nmr-parser/compare/v0.2.2...v0.2.3) (2020-07-07)
 
 
