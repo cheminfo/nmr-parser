@@ -48,7 +48,7 @@ export function fromJEOL(buffer) {
   );
   newInfo.pulseSequence = info.experiment;
   newInfo.temperature = info.temperature.magnitude;
-  newInfo.digitalFilter = 19;
+  newInfo.digitalFilter = info.digitalFilter;
   newInfo.pulseStrength90 = 1 / (4 * info.pulseStrength90.magnitude);
   newInfo.numberOfScans = info.numberOfScans;
   newInfo.relaxationTime = info.relaxationTime;
