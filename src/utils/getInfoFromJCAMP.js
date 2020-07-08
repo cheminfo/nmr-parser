@@ -152,7 +152,13 @@ export function getInfoFromJCAMP(metaData) {
     }
 
     if (!info.solvent) {
-      maybeAdd(info, 'solvent', metaData.$SOLVENT);
+      maybeAdd(
+        info,
+        'solvent',
+        Array.isArray(metaData.$SOLVENT)
+          ? metaData.$SOLVENT[0]
+          : metaData.$SOLVENT,
+      );
     }
   }
 
