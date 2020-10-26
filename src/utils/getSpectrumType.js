@@ -14,16 +14,17 @@ export function getSpectrumType(meta = {}, info = {}) {
   )
     .replace(/^<(.*)>$/, '$1') // eslint-disable-line prefer-named-capture-group
     .toLowerCase();
-
   if (spectyp) return spectyp;
 
-  let pulse = meta.pulse;
+  let pulse = Array.isArray(meta.pulseSequence)
+    ? meta.pulseSequence[0]
+    : meta.pulseSequence || '';
   if (typeof pulse !== 'string') {
     return '';
   }
 
   pulse = pulse.toLowerCase();
-  if (pulse.includes('zg')) {
+  if (pulse.includes('zg') || pulse.includes('single_pulse_dec')) {
     return '1d';
   }
 
@@ -76,6 +77,5 @@ export function getSpectrumType(meta = {}, info = {}) {
   if (pulse.includes('jmod') || pulse.includes('apt')) {
     return 'aptjmod';
   }
-
   return '';
 }
