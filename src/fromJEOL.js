@@ -10,7 +10,6 @@ import { toKeyValue } from './utils/toKeyValue';
 export function fromJEOL(buffer) {
   let parsedData = parseJEOL(buffer);
   let info = parsedData.info;
-  console.log('information in nmr', info);
   let headers = parsedData.headers;
   let parameters = parsedData.parameters;
   let paramArray = Object.assign({}, parameters.paramArray);
@@ -38,7 +37,7 @@ export function fromJEOL(buffer) {
   //newInfo.comment = info.comment;
   newInfo.solvent = info.solvent;
   newInfo.temperature = info.temperature.magnitude;
-  newInfo.probeName = info.probeName || 'undefined';
+  newInfo.probeName = info.probeName || '';
   newInfo.fieldStrength = info.fieldStrength.magnitude;
 
   let gyromagneticRatioConstants = newInfo.nucleus.map(
