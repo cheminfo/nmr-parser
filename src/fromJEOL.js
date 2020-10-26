@@ -37,7 +37,7 @@ export function fromJEOL(buffer) {
   //newInfo.comment = info.comment;
   newInfo.solvent = info.solvent;
   newInfo.temperature = info.temperature.magnitude;
-  newInfo.probeName = info.probeId;
+  newInfo.probeName = info.probeName || '';
   newInfo.fieldStrength = info.fieldStrength.magnitude;
 
   let gyromagneticRatioConstants = newInfo.nucleus.map(
@@ -47,11 +47,14 @@ export function fromJEOL(buffer) {
     (gmr) => (info.fieldStrength.magnitude * gmr) / (2 * Math.PI * 1e6),
   );
   newInfo.pulseSequence = info.experiment;
-  newInfo.temperature = info.temperature.magnitude;
+  newInfo.temperature =
+    info.temperature.unit.toLowerCase() === 'celsius'
+      ? 273.15 + info.temperature.magnitude
+      : info.temperature.magnitude;
   newInfo.digitalFilter = info.digitalFilter;
   newInfo.pulseStrength90 = 1 / (4 * info.pulseStrength90.magnitude);
   newInfo.numberOfScans = info.numberOfScans;
-  newInfo.relaxationTime = info.relaxationTime;
+  newInfo.relaxationTime = info.relaxationTime.magnitude;
 
   newInfo.isComplex = info.dataSections.includes('im');
   newInfo.isFid = info.dataUnits[0] === 'Second';
@@ -73,16 +76,6 @@ export function fromJEOL(buffer) {
   newInfo.spectralWidth = info.spectralWidth
     .map((sw, i) => (sw.magnitude / info.originFrequency[i].magnitude) * 1e6)
     .slice(0, dimension);
-
-  if (dimension === 1) {
-    [
-      'spectralWidth',
-      'acquisitionTime',
-      'frequencyOffset',
-      'numberOfPoints',
-      'originFrequency',
-    ].forEach((key) => (newInfo[key] = [newInfo[key]]));
-  }
 
   // set options for dimensions
   let dimensions = [];
