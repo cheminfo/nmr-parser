@@ -1,3 +1,11 @@
+### [0.2.5](https://github.com/cheminfo/nmr-parser/compare/v0.2.4...v0.2.5) (2020-10-27)
+
+
+### Bug Fixes
+
+* close [#6](https://github.com/cheminfo/nmr-parser/issues/6) ([8ffcab9](https://github.com/cheminfo/nmr-parser/commit/8ffcab9fba5239b50679bf75e0e1592a9fb036b3))
+* info exportation to nmr-parser is sync now ([d2fa3f9](https://github.com/cheminfo/nmr-parser/commit/d2fa3f96295a8086cd5f695ecb359c9d688ff728))
+
 ## [0.2.4](https://github.com/cheminfo/nmr-parser/compare/v0.2.3...v0.2.4) (2020-07-08)
 
 
