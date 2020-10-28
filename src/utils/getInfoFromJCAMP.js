@@ -4,7 +4,8 @@ import { getDigitalFilterParameters } from './getDigitalFilterParameters';
 import { getNucleusFrom2DExperiment } from './getNucleusFrom2DExperiment';
 import { getSpectrumType } from './getSpectrumType';
 
-export function getInfoFromJCAMP(metaData) {
+export function getInfoFromJCAMP(metaData, options = {}) {
+  const { subfix = '' } = options;
   const info = {
     dimension: 0,
     nucleus: [],
@@ -12,8 +13,10 @@ export function getInfoFromJCAMP(metaData) {
     isFt: false,
     isComplex: false,
   };
-  const separator = JSON.stringify(metaData).match('\r\n') ? '\r\n' : '\n';
-  let creator = metaData.JCAMPDX.toLowerCase() + metaData.ORIGIN.toLowerCase();
+  let metadataString = JSON.stringify(metaData);
+  const separator = metadataString.match('\r\n') ? '\r\n' : '\n';
+  let creator =
+    String(metaData.JCAMPDX).toLowerCase() + metaData.ORIGIN.toLowerCase();
 
   if (creator.includes('mestre') || creator.includes('nova')) {
     creator = 'mnova';
@@ -28,9 +31,9 @@ export function getInfoFromJCAMP(metaData) {
     }
   }
   // eslint-disable-next-line dot-notation
-  if (metaData['$NUC1']) {
+  if (metaData[`${subfix}NUC1`]) {
     // eslint-disable-next-line dot-notation
-    let nucleus = metaData['$NUC1'];
+    let nucleus = metaData[`${subfix}NUC1`];
     if (!Array.isArray(nucleus)) nucleus = [nucleus];
     nucleus = nucleus.map((value) =>
       value.replace(/[^A-Za-z0-9]/g, '').replace('NA', ''),
@@ -61,7 +64,7 @@ export function getInfoFromJCAMP(metaData) {
   info.dimension = info.nucleus.length;
   maybeAdd(info, 'title', metaData.TITLE);
   maybeAdd(info, 'solvent', metaData['.SOLVENTNAME']);
-  maybeAdd(info, 'temperature', metaData.$TE || metaData['.TE']);
+  maybeAdd(info, 'temperature', metaData[`${subfix}TE`] || metaData['.TE']);
   maybeAdd(info, 'type', metaData.DATATYPE);
 
   if (info.type) {
@@ -78,7 +81,9 @@ export function getInfoFromJCAMP(metaData) {
   maybeAdd(
     info,
     'pulseSequence',
-    metaData['.PULSESEQUENCE'] || metaData['.PULPROG'] || metaData.$PULPROG,
+    metaData['.PULSESEQUENCE'] ||
+      metaData['.PULPROG'] ||
+      metaData[`${subfix}PULPROG`],
   );
   maybeAdd(info, 'experiment', getSpectrumType(info, metaData));
 
@@ -86,9 +91,9 @@ export function getInfoFromJCAMP(metaData) {
 
   if (creator === 'bruker') {
     const gyromagneticRatioConst = gyromagneticRatio[info.nucleus[0]];
-    maybeAdd(info, 'probeName', metaData.$PROBHD);
-    maybeAdd(info, 'originFrequency', metaData.$SFO1);
-    maybeAdd(info, 'baseFrequency', metaData.$BF1);
+    maybeAdd(info, 'probeName', metaData[`${subfix}PROBHD`]);
+    maybeAdd(info, 'originFrequency', metaData[`${subfix}SFO1`]);
+    maybeAdd(info, 'baseFrequency', metaData[`${subfix}BF1`]);
     const { baseFrequency, originFrequency } = info;
     let fieldStrength =
       2 * Math.PI * (baseFrequency[0] / gyromagneticRatioConst) * 1e6;
@@ -98,16 +103,22 @@ export function getInfoFromJCAMP(metaData) {
 
     maybeAdd(info, 'fieldStrength', fieldStrength);
     maybeAdd(info, 'frequencyOffset', frequencyOffset);
-    maybeAdd(info, 'spectralWidth', metaData.$SW);
-    maybeAdd(info, 'numberOfPoints', metaData.$TD);
-    maybeAdd(info, 'sampleName', metaData.$NAME);
+    maybeAdd(info, 'spectralWidth', metaData[`${subfix}SW`]);
+    maybeAdd(info, 'numberOfPoints', metaData[`${subfix}TD`]);
+    maybeAdd(info, 'sampleName', metaData[`${subfix}NAME`]);
 
-    if (metaData.$FNTYPE !== undefined) {
-      maybeAdd(info, 'acquisitionMode', parseInt(metaData.$FNTYPE, 10));
+    if (metaData[`${subfix}FNTYPE`] !== undefined) {
+      maybeAdd(
+        info,
+        'acquisitionMode',
+        parseInt(metaData[`${subfix}FNTYPE`], 10),
+      );
     }
-    let varName = metaData.VARNAME ? metaData.VARNAME.split(',')[0] : '';
+    let varName = metaData[`${subfix}VARNAME`]
+      ? metaData[`${subfix}VARNAME`].split(',')[0]
+      : '';
     if (varName === 'TIME') {
-      maybeAdd(info, 'acquisitionTime', Number(metaData.LAST.split(',')[0]));
+      maybeAdd(info, 'acquisitionTime', Number(metaData.LAST));
     }
 
     const { numberOfPoints, spectralWidth } = info;
@@ -122,18 +133,25 @@ export function getInfoFromJCAMP(metaData) {
     }
 
     let pulseStrength =
-      1e6 / (metaData.$P.split(separator)[1].split(' ')[1] * 4);
+      1e6 / (metaData[`${subfix}P`].split(separator)[1].split(' ')[1] * 4);
     maybeAdd(info, 'pulseStrength90', pulseStrength);
-    let relaxationTime = metaData.$D.split(separator)[1].split(' ')[1];
+    let relaxationTime = metaData[`${subfix}D`]
+      .split(separator)[1]
+      .split(' ')[1];
     maybeAdd(info, 'relaxationTime', Number(relaxationTime));
-    maybeAdd(info, 'numberOfScans', Number(metaData.$NS));
+    maybeAdd(info, 'numberOfScans', Number(metaData[`${subfix}NS`]));
 
     let increment;
     if (info.isFid) {
+      maybeAdd(info, 'groupDelay', metaData[`${subfix}GRPDLY`] || 0);
+      maybeAdd(info, 'DSPFVS', metaData[`${subfix}DSPFVS`]);
+      maybeAdd(info, 'DECIM', metaData[`${subfix}DECIM`]);
+
+      let { groupDelay, DSPFVS, DECIM } = info;
       let digitalFilterParameters = getDigitalFilterParameters(
-        metaData.$GRPDLY,
-        metaData.$DSPFVS,
-        metaData.$DECIM,
+        groupDelay[0],
+        DSPFVS[0],
+        DECIM[0],
       );
       maybeAdd(info, 'digitalFilter', digitalFilterParameters);
       increment = numberOfPoints.map((nb) => {
@@ -146,18 +164,19 @@ export function getInfoFromJCAMP(metaData) {
     }
 
     maybeAdd(info, 'increment', increment);
-
-    if (metaData.$DATE) {
-      info.date = new Date(parseInt(metaData.$DATE, 10) * 1000).toISOString();
+    if (metaData[`${subfix}DATE`]) {
+      info.date = new Date(
+        parseInt(metaData[`${subfix}DATE`], 10) * 1000,
+      ).toISOString();
     }
 
     if (!info.solvent) {
       maybeAdd(
         info,
         'solvent',
-        Array.isArray(metaData.$SOLVENT)
-          ? metaData.$SOLVENT[0]
-          : metaData.$SOLVENT,
+        Array.isArray(metaData[`${subfix}SOLVENT`])
+          ? metaData[`${subfix}SOLVENT`][0]
+          : metaData[`${subfix}SOLVENT`],
       );
     }
   }

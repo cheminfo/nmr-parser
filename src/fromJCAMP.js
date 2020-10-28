@@ -15,7 +15,7 @@ export function fromJCAMP(buffer) {
   let entries = parsedData.flatten;
   for (let entry of entries) {
     if ((entry.spectra && entry.spectra.length > 0) || entry.minMax) {
-      let info = getInfoFromJCAMP(entry.info);
+      let info = getInfoFromJCAMP(Object.assign({}, entry.info, entry.meta));
       let dimensions = [];
       let dependentVariables = [];
 

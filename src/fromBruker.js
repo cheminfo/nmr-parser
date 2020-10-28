@@ -19,7 +19,9 @@ export async function fromBruker(zipFile, options = {}) {
   let dataStructure = [];
   for (let element of parseData) {
     let entry = element.value;
-    let info = getInfoFromJCAMP(entry.info);
+    let info = getInfoFromJCAMP(Object.assign({}, entry.info, entry.meta), {
+      subfix: '$',
+    });
     let dimensions = [];
     let dependentVariables = [];
 
