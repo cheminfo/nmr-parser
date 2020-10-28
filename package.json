@@ -52,7 +52,7 @@
     "@types/jest": "^26.0.15",
     "bruker-data-test": "0.0.2",
     "cheminfo-build": "^1.1.8",
-    "eslint": "^7.12.0",
+    "eslint": "^7.12.1",
     "eslint-config-cheminfo": "^5.2.2",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-jest": "^24.1.0",
@@ -65,8 +65,8 @@
   },
   "dependencies": {
     "brukerconverter": "^3.0.0",
-    "jcampconverter": "^7.6.3",
+    "jcampconverter": "^7.6.5",
     "jeolconverter": "0.2.0",
-    "nmr-processing": "^0.2.5"
+    "nmr-processing": "^0.3.0"
   }
 }
