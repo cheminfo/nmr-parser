@@ -118,7 +118,11 @@ export function getInfoFromJCAMP(metaData, options = {}) {
       ? metaData[`${subfix}VARNAME`].split(',')[0]
       : '';
     if (varName === 'TIME') {
-      maybeAdd(info, 'acquisitionTime', Number(metaData.LAST));
+      let value =
+        typeof metaData.LAST === 'string' || metaData.LAST instanceof String
+          ? metaData.LAST.replace(' ', '').split(',')[0]
+          : metaData.LAST;
+      maybeAdd(info, 'acquisitionTime', Number(value));
     }
 
     const { numberOfPoints, spectralWidth } = info;
