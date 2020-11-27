@@ -15,7 +15,8 @@ export function fromJCAMP(buffer) {
   let entries = parsedData.flatten;
   for (let entry of entries) {
     if ((entry.spectra && entry.spectra.length > 0) || entry.minMax) {
-      let info = getInfoFromJCAMP(Object.assign({}, entry.info, entry.meta));
+      let metadata = Object.assign({}, entry.info, entry.meta);
+      let info = getInfoFromJCAMP(metadata);
       let dimensions = [];
       let dependentVariables = [];
 
@@ -49,7 +50,7 @@ export function fromJCAMP(buffer) {
         dimensions,
         dependentVariables,
         info,
-        meta: entry.info,
+        meta: metadata,
         timeStamp: new Date().valueOf(),
         version: [{ 'nmr-parser': version }, dependencies, devDependencies],
       });

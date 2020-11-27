@@ -19,7 +19,8 @@ export async function fromBruker(zipFile, options = {}) {
   let dataStructure = [];
   for (let element of parseData) {
     let entry = element.value;
-    let info = getInfoFromJCAMP(Object.assign({}, entry.info, entry.meta), {
+    let metadata = Object.assign({}, entry.info, entry.meta);
+    let info = getInfoFromJCAMP(metadata, {
       subfix: '$',
     });
     let dimensions = [];
@@ -56,7 +57,7 @@ export async function fromBruker(zipFile, options = {}) {
       dimensions,
       dependentVariables,
       info,
-      meta: entry.info,
+      meta: metadata,
       timeStamp: new Date().valueOf(),
       version: [{ 'nmr-parser': version }, dependencies, devDependencies],
     });
