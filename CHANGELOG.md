@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.2.9](https://www.github.com/cheminfo/nmr-parser/compare/v0.2.8...v0.2.9) (2020-11-27)
+
+
+### Bug Fixes
+
+* join info and meta in meta property ([a4f6a96](https://www.github.com/cheminfo/nmr-parser/commit/a4f6a96866836a4b6ddf6ff2d68aa449425332f6))
+
 ### [0.2.8](https://www.github.com/cheminfo/nmr-parser/compare/v0.2.7...v0.2.8) (2020-10-28)
 
 
