@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.2.10](https://www.github.com/cheminfo/nmr-parser/compare/v0.2.9...v0.2.10) (2020-11-27)
+
+
+### Bug Fixes
+
+* update dependencies ([2978a4d](https://www.github.com/cheminfo/nmr-parser/commit/2978a4d829c25a150133ca04d4457f8bf9f4f264))
+
 ### [0.2.9](https://www.github.com/cheminfo/nmr-parser/compare/v0.2.8...v0.2.9) (2020-11-27)
 
 
