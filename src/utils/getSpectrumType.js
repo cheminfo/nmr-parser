@@ -8,6 +8,7 @@ export function getSpectrumType(meta = {}, info = {}) {
   if (typeof meta === 'string') {
     meta = { pulse: meta };
   }
+
   let spectyp = (Array.isArray(info.$SPECTYP)
     ? info.$SPECTYP[0]
     : info.$SPECTYP || ''
@@ -46,6 +47,14 @@ export function getSpectrumType(meta = {}, info = {}) {
     return 'hmbc';
   }
 
+  if (pulse.includes('hmqc')) {
+    return 'hmqc';
+  }
+
+  if (pulse.includes('udeft')) {
+    return ' udeft';
+  }
+
   if (pulse.includes('cosy')) {
     return 'cosy';
   }
@@ -77,5 +86,6 @@ export function getSpectrumType(meta = {}, info = {}) {
   if (pulse.includes('jmod') || pulse.includes('apt')) {
     return 'aptjmod';
   }
-  return '';
+
+  return meta.dimension ? `${meta.dimension}d` : '';
 }
