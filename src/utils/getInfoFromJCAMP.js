@@ -15,8 +15,9 @@ export function getInfoFromJCAMP(metaData, options = {}) {
   };
   let metadataString = JSON.stringify(metaData);
   const separator = metadataString.match('\r\n') ? '\r\n' : '\n';
-  let creator =
-    String(metaData.JCAMPDX).toLowerCase() + metaData.ORIGIN.toLowerCase();
+
+  let { JCAMPDX: jcampdx = '', ORIGIN: origin = '' } = metaData;
+  let creator = String(jcampdx).toLowerCase() + origin.toLowerCase();
 
   if (creator.includes('mestre') || creator.includes('nova')) {
     creator = 'mnova';
