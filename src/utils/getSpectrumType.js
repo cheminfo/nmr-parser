@@ -25,7 +25,11 @@ export function getSpectrumType(meta = {}, info = {}) {
   }
 
   pulse = pulse.toLowerCase();
-  if (pulse.includes('zg') || pulse.includes('single_pulse_dec')) {
+  if (
+    pulse.includes('zg') ||
+    pulse.includes('single_pulse_dec') ||
+    pulse.includes('udeft')
+  ) {
     return '1d';
   }
 
@@ -49,10 +53,6 @@ export function getSpectrumType(meta = {}, info = {}) {
 
   if (pulse.includes('hmqc')) {
     return 'hmqc';
-  }
-
-  if (pulse.includes('udeft')) {
-    return ' udeft';
   }
 
   if (pulse.includes('cosy')) {
