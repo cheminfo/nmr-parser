@@ -6,7 +6,7 @@
 export function getSpectrumType(meta = {}, info = {}) {
   if (meta === null) meta = {};
   if (typeof meta === 'string') {
-    meta = { pulse: meta };
+    meta = { pulseSequence: meta };
   }
 
   let spectyp = (Array.isArray(info.$SPECTYP)
@@ -20,8 +20,9 @@ export function getSpectrumType(meta = {}, info = {}) {
   let pulse = Array.isArray(meta.pulseSequence)
     ? meta.pulseSequence[0]
     : meta.pulseSequence || '';
+
   if (typeof pulse !== 'string') {
-    return '';
+    return meta.dimension ? `${meta.dimension}d` : '';
   }
 
   pulse = pulse.toLowerCase();
