@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.3.0](https://www.github.com/cheminfo/nmr-parser/compare/v0.2.10...v0.3.0) (2020-12-21)
+
+
+### Features
+
+* add support for hmqc and udeft experiments ([4973790](https://www.github.com/cheminfo/nmr-parser/commit/497379052a117c7ac62f437e068560c854d8d6f1)), closes [#10](https://www.github.com/cheminfo/nmr-parser/issues/10)
+* improve coverage ([5d2f8b6](https://www.github.com/cheminfo/nmr-parser/commit/5d2f8b6d653f35143b4d87d31670be18095cf8d6))
+* return 1d for udeft pulse sequence ([e7e8385](https://www.github.com/cheminfo/nmr-parser/commit/e7e8385931f0efb0457bc66226ec0bdb0887df1c))
+
+
+### Bug Fixes
+
+* avoid crash if ORIGIN field does not exist ([1ac380e](https://www.github.com/cheminfo/nmr-parser/commit/1ac380e52e266a28236051f150e42b68d10a53de)), closes [#13](https://www.github.com/cheminfo/nmr-parser/issues/13)
+
 ### [0.2.10](https://www.github.com/cheminfo/nmr-parser/compare/v0.2.9...v0.2.10) (2020-11-27)
 
 
