@@ -19,7 +19,7 @@ export function fromJCAMP(buffer) {
       let info = getInfoFromJCAMP(metadata);
 
       if (info.experiment === 'wobble_curve') continue;
-      
+
       let dimensions = [];
       let dependentVariables = [];
 

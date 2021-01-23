@@ -25,7 +25,7 @@ export async function fromBruker(zipFile, options = {}) {
     });
 
     if (info.experiment === 'wobble_curve') continue;
-    
+
     let dimensions = [];
     let dependentVariables = [];
 
