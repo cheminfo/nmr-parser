@@ -23,6 +23,9 @@ export async function fromBruker(zipFile, options = {}) {
     let info = getInfoFromJCAMP(metadata, {
       subfix: '$',
     });
+
+    if (info.experiment === 'wobble_curve') continue;
+
     let dimensions = [];
     let dependentVariables = [];
 

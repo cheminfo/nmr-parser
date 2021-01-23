@@ -23,7 +23,7 @@ describe('test fromJCAMP', () => {
     expect(info.pulseStrength90).toBeCloseTo(22727.272727272728, 5);
     expect(info.numberOfScans).toStrictEqual(32);
     expect(info.relaxationTime).toStrictEqual(1.2);
-    expect(info.experiment).toStrictEqual('1d');
+    expect(info.experiment).toStrictEqual('proton');
     expect(info.isComplex).toStrictEqual(true);
     expect(info.isFid).toStrictEqual(true);
     expect(info.isFt).toStrictEqual(false);

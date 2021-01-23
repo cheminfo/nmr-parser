@@ -3,19 +3,19 @@
  * @param {string} pulse
  * @return {string}
  */
-export function getSpectrumType(meta = {}, info = {}) {
-  if (meta === null) meta = {};
-  if (typeof meta === 'string') {
-    meta = { pulseSequence: meta };
-  }
+export function getSpectrumType(meta = {}, info = {}, options = {}) {
+  const { subfix = '' } = options;
 
-  let spectyp = (Array.isArray(info.$SPECTYP)
-    ? info.$SPECTYP[0]
-    : info.$SPECTYP || ''
-  )
-    .replace(/^<(.*)>$/, '$1') // eslint-disable-line prefer-named-capture-group
-    .toLowerCase();
-  if (spectyp) return spectyp;
+  if (meta === null) meta = {};
+  if (typeof meta === 'string') meta = { pulseSequence: meta };
+
+  let spectyp = info[`${subfix}SPECTYP`];
+
+  if (spectyp) {
+    return (Array.isArray(spectyp) ? spectyp[0] : spectyp || '')
+      .replace(/^<(.*)>$/, '$1') // eslint-disable-line prefer-named-capture-group
+      .toLowerCase();
+  }
 
   let pulse = Array.isArray(meta.pulseSequence)
     ? meta.pulseSequence[0]
