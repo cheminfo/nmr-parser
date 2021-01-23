@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.0](https://www.github.com/cheminfo/nmr-parser/compare/v0.3.1...v0.4.0) (2021-01-23)
+
+
+### Features
+
+* ignore wobble curves ([#16](https://www.github.com/cheminfo/nmr-parser/issues/16)) ([245ae89](https://www.github.com/cheminfo/nmr-parser/commit/245ae892accaa474ff6d11b4c87c286961969412))
+
 ### [0.3.1](https://www.github.com/cheminfo/nmr-parser/compare/v0.3.0...v0.3.1) (2021-01-18)
 
 
