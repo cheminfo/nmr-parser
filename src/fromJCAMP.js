@@ -17,6 +17,9 @@ export function fromJCAMP(buffer) {
     if ((entry.spectra && entry.spectra.length > 0) || entry.minMax) {
       let metadata = Object.assign({}, entry.info, entry.meta);
       let info = getInfoFromJCAMP(metadata);
+
+      if (info.experiment === 'wobble_curve') continue;
+      
       let dimensions = [];
       let dependentVariables = [];
 

@@ -3,11 +3,13 @@
  * @param {string} pulse
  * @return {string}
  */
-export function getSpectrumType(meta = {}, info = {}) {
+export function getSpectrumType(meta = {}, info = {}, options = {}) {
+  const { subfix = '' } = options;
+
   if (meta === null) meta = {};
   if (typeof meta === 'string') meta = { pulseSequence: meta };
 
-  let spectyp = info.SPECTYP || info.$SPECTYP;
+  let spectyp = info[`${subfix}SPECTYP`];
 
   if (spectyp) {
     return (Array.isArray(spectyp) ? spectyp[0] : spectyp || '')

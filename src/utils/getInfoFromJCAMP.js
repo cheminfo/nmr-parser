@@ -86,7 +86,7 @@ export function getInfoFromJCAMP(metaData, options = {}) {
       metaData['.PULPROG'] ||
       metaData[`${subfix}PULPROG`],
   );
-  maybeAdd(info, 'experiment', getSpectrumType(info, metaData));
+  maybeAdd(info, 'experiment', getSpectrumType(info, metaData, { subfix }));
 
   maybeAdd(info, 'originFrequency', metaData['.OBSERVEFREQUENCY']);
 
