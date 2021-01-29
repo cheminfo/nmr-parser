@@ -10,12 +10,11 @@ export function getSpectrumType(meta = {}, info = {}, options = {}) {
   if (typeof meta === 'string') meta = { pulseSequence: meta };
 
   let spectyp = info[`${subfix}SPECTYP`];
+  spectyp = (Array.isArray(spectyp) ? spectyp[0] : spectyp || '')
+    .replace(/^<(.*)>$/, '$1') // eslint-disable-line prefer-named-capture-group
+    .toLowerCase();
 
-  if (spectyp) {
-    return (Array.isArray(spectyp) ? spectyp[0] : spectyp || '')
-      .replace(/^<(.*)>$/, '$1') // eslint-disable-line prefer-named-capture-group
-      .toLowerCase();
-  }
+  if (spectyp.length > 0) return spectyp;
 
   let pulse = Array.isArray(meta.pulseSequence)
     ? meta.pulseSequence[0]
