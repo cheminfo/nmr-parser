@@ -1,3 +1,5 @@
+import isAnyArray from 'is-any-array';
+
 import { numericTypeTable, quantityTypeTable } from './constantTables';
 /**
  * a class for dependent variable
@@ -24,7 +26,7 @@ export function formatDependentVariable(data, numericType, options = {}) {
   } = options;
 
   let components;
-  if (Array.isArray(data)) {
+  if (isAnyArray(data)) {
     throw new Error('not yet implemented');
   } else if (Object.keys(data).length === 2) {
     components = fromReIm(data, from, to);
@@ -62,7 +64,7 @@ function fromReIm(reIm, from, to) {
   let dataLength = [];
   let componentLabels = [];
   let components = [];
-  if (Array.isArray(reIm.re) & Array.isArray(reIm.im)) {
+  if (isAnyArray(reIm.re) & isAnyArray(reIm.im)) {
     if (typeof reIm.re[0] === 'number') {
       // if 1D
       dataLength[0] = setLengthComplex(from[0], to[0], reIm.re.length);
@@ -74,7 +76,7 @@ function fromReIm(reIm, from, to) {
       }
       components.push(component);
       componentLabels.push('complex');
-    } else if (Array.isArray(reIm.re[0])) {
+    } else if (isAnyArray(reIm.re[0])) {
       // if 2D
       dataLength[0] = setLength(from[1], to[1], reIm.re.length);
       dataLength[1] = setLengthComplex(from[0], to[0], reIm.re[0].length);
@@ -91,7 +93,7 @@ function fromReIm(reIm, from, to) {
     } else {
       throw new Error('check your object');
     }
-  } else if (Array.isArray(reIm.re.re)) {
+  } else if (isAnyArray(reIm.re.re)) {
     dataLength[0] = reIm.re.re.length * 2;
     let re = fromReIm(reIm.re, from, to).components;
     let im = fromReIm(reIm.im, from, to).components;

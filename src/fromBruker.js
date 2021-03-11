@@ -2,6 +2,7 @@ import { convertZip as convertBruker } from 'brukerconverter';
 
 import { version, dependencies, devDependencies } from '../package.json';
 
+import { convertToFloatArray } from './utils/convertToFloatArray';
 import { getInfoFromJCAMP } from './utils/getInfoFromJCAMP';
 
 const defaultOptions = {
@@ -19,37 +20,37 @@ export async function fromBruker(zipFile, options = {}) {
   let dataStructure = [];
   for (let element of parseData) {
     let entry = element.value;
+    console.log('entry', entry.meta);
     let metadata = Object.assign({}, entry.info, entry.meta);
-    let info = getInfoFromJCAMP(metadata, {
-      subfix: '$',
-    });
+    let meta = getInfoFromJCAMP(metadata);
 
-    if (info.experiment === 'wobble_curve') continue;
+    if (meta.experiment === 'wobble_curve') continue;
 
     let dimensions = [];
     let dependentVariables = [];
 
     let dependentVariable = {};
 
-    if (info.dimension === 1) {
-      dependentVariable.components = entry.spectra;
-    } else if (info.dimension === 2) {
+    if (meta.dimension === 1) {
+      dependentVariable.components = convertToFloatArray(entry.spectra);
+    } else if (meta.dimension === 2) {
+      entry.minMax.z = convertToFloatArray(entry.minMax.z);
       dependentVariable.components = entry.minMax;
     }
     let dimension = {
-      increment: info.increment,
-      numberOfPoints: info.numberOfPoints,
+      increment: meta.increment,
+      numberOfPoints: meta.numberOfPoints,
     };
 
-    if (info.fid) {
+    if (meta.fid) {
       dimension.coordinatesOffset = {
-        magnitude: -info.digitalFilter * info.increment,
+        magnitude: -meta.digitalFilter * meta.increment,
         units: 'second',
       };
     } else {
       dimension.coordinatesOffset = {
         magnitude:
-          info.frequencyOffset / info.baseFrequency - 0.5 * info.spectraWidth,
+          meta.frequencyOffset / meta.baseFrequency - 0.5 * meta.spectraWidth,
         units: 'ppm',
       };
     }
@@ -59,8 +60,8 @@ export async function fromBruker(zipFile, options = {}) {
     dataStructure.push({
       dimensions,
       dependentVariables,
-      info,
-      meta: metadata,
+      info: entry.info,
+      meta,
       timeStamp: new Date().valueOf(),
       version: [{ 'nmr-parser': version }, dependencies, devDependencies],
     });
