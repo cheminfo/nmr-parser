@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.7.0](https://www.github.com/cheminfo/nmr-parser/compare/v0.6.0...v0.7.0) (2021-03-18)
+
+
+### Features
+
+* small refactor of getInfoFromJCAMP ([#23](https://www.github.com/cheminfo/nmr-parser/issues/23)) ([d445c33](https://www.github.com/cheminfo/nmr-parser/commit/d445c336564a5a255f8da85a2a9b1d24a7c8a3bc))
+
 ## [0.6.0](https://www.github.com/cheminfo/nmr-parser/compare/v0.5.0...v0.6.0) (2021-03-18)
 
 
