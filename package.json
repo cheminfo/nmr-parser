@@ -64,8 +64,9 @@
     "rollup": "^2.36.2"
   },
   "dependencies": {
-    "brukerconverter": "^3.0.0",
-    "jcampconverter": "^7.6.6",
+    "brukerconverter": "^3.2.0",
+    "is-any-array": "^0.1.1",
+    "jcampconverter": "^7.7.0",
     "jeolconverter": "0.2.0",
     "nmr-processing": "^0.5.0"
   }

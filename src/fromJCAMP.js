@@ -2,6 +2,7 @@ import { convert } from 'jcampconverter';
 
 import { version, dependencies, devDependencies } from '../package.json';
 
+import { convertToFloatArray } from './utils/convertToFloatArray';
 import { getInfoFromJCAMP } from './utils/getInfoFromJCAMP';
 
 export function fromJCAMP(buffer) {
@@ -25,8 +26,13 @@ export function fromJCAMP(buffer) {
 
       let dependentVariable = {};
       if (info.dimension === 1) {
+        for (let i = 0; i < entry.spectra.length; i++) {
+          let data = entry.spectra[i].data;
+          data = convertToFloatArray(data);
+        }
         dependentVariable.components = entry.spectra;
       } else if (info.dimension === 2) {
+        entry.minMax.z = convertToFloatArray(entry.minMax.z);
         dependentVariable.components = entry.minMax;
       }
       let dimension = {

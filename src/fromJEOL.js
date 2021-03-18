@@ -167,11 +167,6 @@ export function fromJEOL(buffer) {
   let dependentVariables = [];
   dependentVariables.push(formatDependentVariable(data, 11, options));
 
-  // let description = {};
-  // for (let key in newInfo) {
-  //   description[key] = newInfo[key];
-  // }
-
   let description = Object.assign({}, newInfo);
 
   delete description.paramList;

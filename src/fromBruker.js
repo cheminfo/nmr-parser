@@ -2,6 +2,7 @@ import { convertZip as convertBruker } from 'brukerconverter';
 
 import { version, dependencies, devDependencies } from '../package.json';
 
+import { convertToFloatArray } from './utils/convertToFloatArray';
 import { getInfoFromJCAMP } from './utils/getInfoFromJCAMP';
 
 const defaultOptions = {
@@ -20,9 +21,7 @@ export async function fromBruker(zipFile, options = {}) {
   for (let element of parseData) {
     let entry = element.value;
     let metadata = Object.assign({}, entry.info, entry.meta);
-    let info = getInfoFromJCAMP(metadata, {
-      subfix: '$',
-    });
+    let info = getInfoFromJCAMP(metadata);
 
     if (info.experiment === 'wobble_curve') continue;
 
@@ -32,8 +31,13 @@ export async function fromBruker(zipFile, options = {}) {
     let dependentVariable = {};
 
     if (info.dimension === 1) {
+      for (let i = 0; i < entry.spectra.length; i++) {
+        let data = entry.spectra[i].data;
+        data = convertToFloatArray(data);
+      }
       dependentVariable.components = entry.spectra;
     } else if (info.dimension === 2) {
+      entry.minMax.z = convertToFloatArray(entry.minMax.z);
       dependentVariable.components = entry.minMax;
     }
     let dimension = {
@@ -56,15 +60,15 @@ export async function fromBruker(zipFile, options = {}) {
 
     dimensions.push(dimension);
     dependentVariables.push(dependentVariable);
+
     dataStructure.push({
       dimensions,
       dependentVariables,
-      info,
+      info: info,
       meta: metadata,
       timeStamp: new Date().valueOf(),
       version: [{ 'nmr-parser': version }, dependencies, devDependencies],
     });
   }
-
   return dataStructure;
 }
