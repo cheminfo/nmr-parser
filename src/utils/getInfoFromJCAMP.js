@@ -1,7 +1,7 @@
 import { gyromagneticRatio } from 'nmr-processing';
 
 import { getDigitalFilterParameters } from './getDigitalFilterParameters';
-import { getNucleusFrom2DExperiment } from './getNucleusFrom2DExperiment';
+import { getNucleusFromMetadata } from './getNucleusFromMetadata';
 import { getSpectrumType } from './getSpectrumType';
 
 export function getInfoFromJCAMP(metaData, options = {}) {
@@ -31,45 +31,10 @@ export function getInfoFromJCAMP(metaData, options = {}) {
       info.date = metaData.LONGDATE;
     }
   }
-  // eslint-disable-next-line dot-notation
-  if (metaData[`${subfix}AXNUC`]) {
-    // eslint-disable-next-line dot-notation
-    let nucleus = metaData[`${subfix}AXNUC`];
-    if (!Array.isArray(nucleus)) nucleus = [nucleus];
-    nucleus = nucleus.map((value) =>
-      value.replace(/[^A-Za-z0-9]/g, '').replace('NA', ''),
-    );
-    let beforeLength = nucleus.length;
-    nucleus = nucleus.filter((value) => value);
-    if (nucleus.length === beforeLength) {
-      info.nucleus = nucleus;
-    }
-  } else if (metaData[`${subfix}NUC1`]) {
-    let nucleus = metaData[`${subfix}NUC1`];
-    if (!Array.isArray(nucleus)) nucleus = [nucleus];
-    nucleus = nucleus.map((value) =>
-      value.replace(/[^A-Za-z0-9]/g, '').replace('NA', ''),
-    );
-  }
 
-  if (!info.nucleus || info.nucleus.length === 0) {
-    if (metaData['.NUCLEUS']) {
-      info.nucleus = metaData['.NUCLEUS'].split(',').map((nuc) => nuc.trim());
-    } else if (metaData['.OBSERVENUCLEUS']) {
-      info.nucleus = [metaData['.OBSERVENUCLEUS'].replace(/[^A-Za-z0-9]/g, '')];
-    } else {
-      info.nucleus = getNucleusFrom2DExperiment(info.experiment);
-    }
-  }
-
-  if (metaData['2D_X_NUCLEUS'] && metaData['2D_Y_NUCLEUS']) {
-    info.nucleus = [
-      metaData['2D_X_NUCLEUS'].replace(/[^A-Za-z0-9]/g, ''),
-      metaData['2D_Y_NUCLEUS'].replace(/[^A-Za-z0-9]/g, ''),
-    ];
-  }
-
+  info.nucleus = getNucleusFromMetadata(metaData, info, subfix);
   info.dimension = info.nucleus.length;
+
   maybeAdd(info, 'title', metaData.TITLE);
   maybeAdd(info, 'solvent', metaData['.SOLVENTNAME']);
   maybeAdd(info, 'temperature', metaData[`${subfix}TE`] || metaData['.TE']);
