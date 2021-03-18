@@ -6,7 +6,6 @@ describe('testfromBruker', () => {
   it('test fromBruker for aspirin (bruker)', async () => {
     // console.log(bruker['aspirin-1h.zip'])
     let data = await fromBruker(bruker['aspirin-1h.zip'], { base64: true });
-    console.log(`key data ${JSON.stringify(Object.keys(data))}`);
     let meta = data[0].meta;
     expect(meta.nucleus[0]).toStrictEqual('1H');
     // expect(meta.title).toStrictEqual('1H BBI'); // diferente

@@ -32,9 +32,9 @@ export function getInfoFromJCAMP(metaData, options = {}) {
     }
   }
   // eslint-disable-next-line dot-notation
-  if (metaData[`${subfix}NUC1`]) {
+  if (metaData[`${subfix}AXNUC`]) {
     // eslint-disable-next-line dot-notation
-    let nucleus = metaData[`${subfix}NUC1`];
+    let nucleus = metaData[`${subfix}AXNUC`];
     if (!Array.isArray(nucleus)) nucleus = [nucleus];
     nucleus = nucleus.map((value) =>
       value.replace(/[^A-Za-z0-9]/g, '').replace('NA', ''),
@@ -44,6 +44,12 @@ export function getInfoFromJCAMP(metaData, options = {}) {
     if (nucleus.length === beforeLength) {
       info.nucleus = nucleus;
     }
+  } else if (metaData[`${subfix}NUC1`]) {
+    let nucleus = metaData[`${subfix}NUC1`];
+    if (!Array.isArray(nucleus)) nucleus = [nucleus];
+    nucleus = nucleus.map((value) =>
+      value.replace(/[^A-Za-z0-9]/g, '').replace('NA', ''),
+    );
   }
 
   if (!info.nucleus || info.nucleus.length === 0) {
@@ -55,6 +61,7 @@ export function getInfoFromJCAMP(metaData, options = {}) {
       info.nucleus = getNucleusFrom2DExperiment(info.experiment);
     }
   }
+
   if (metaData['2D_X_NUCLEUS'] && metaData['2D_Y_NUCLEUS']) {
     info.nucleus = [
       metaData['2D_X_NUCLEUS'].replace(/[^A-Za-z0-9]/g, ''),

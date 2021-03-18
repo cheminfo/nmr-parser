@@ -20,52 +20,55 @@ export async function fromBruker(zipFile, options = {}) {
   let dataStructure = [];
   for (let element of parseData) {
     let entry = element.value;
-    console.log('entry', entry.meta);
     let metadata = Object.assign({}, entry.info, entry.meta);
-    let meta = getInfoFromJCAMP(metadata);
+    let info = getInfoFromJCAMP(metadata);
 
-    if (meta.experiment === 'wobble_curve') continue;
+    if (info.experiment === 'wobble_curve') continue;
 
     let dimensions = [];
     let dependentVariables = [];
 
     let dependentVariable = {};
 
-    if (meta.dimension === 1) {
-      dependentVariable.components = convertToFloatArray(entry.spectra);
-    } else if (meta.dimension === 2) {
+    if (info.dimension === 1) {
+      for (let i = 0; i < entry.spectra.length; i++) {
+        let data = entry.spectra[i].data;
+        data = convertToFloatArray(data);
+      }
+      dependentVariable.components = entry.spectra;
+    } else if (info.dimension === 2) {
       entry.minMax.z = convertToFloatArray(entry.minMax.z);
       dependentVariable.components = entry.minMax;
     }
     let dimension = {
-      increment: meta.increment,
-      numberOfPoints: meta.numberOfPoints,
+      increment: info.increment,
+      numberOfPoints: info.numberOfPoints,
     };
 
-    if (meta.fid) {
+    if (info.fid) {
       dimension.coordinatesOffset = {
-        magnitude: -meta.digitalFilter * meta.increment,
+        magnitude: -info.digitalFilter * info.increment,
         units: 'second',
       };
     } else {
       dimension.coordinatesOffset = {
         magnitude:
-          meta.frequencyOffset / meta.baseFrequency - 0.5 * meta.spectraWidth,
+          info.frequencyOffset / info.baseFrequency - 0.5 * info.spectraWidth,
         units: 'ppm',
       };
     }
 
     dimensions.push(dimension);
     dependentVariables.push(dependentVariable);
+
     dataStructure.push({
       dimensions,
       dependentVariables,
-      info: entry.info,
-      meta,
+      info: info,
+      meta: metadata,
       timeStamp: new Date().valueOf(),
       version: [{ 'nmr-parser': version }, dependencies, devDependencies],
     });
   }
-
   return dataStructure;
 }

@@ -26,7 +26,11 @@ export function fromJCAMP(buffer) {
 
       let dependentVariable = {};
       if (info.dimension === 1) {
-        dependentVariable.components = convertToFloatArray(entry.spectra);
+        for (let i = 0; i < entry.spectra.length; i++) {
+          let data = entry.spectra[i].data;
+          data = convertToFloatArray(data);
+        }
+        dependentVariable.components = entry.spectra;
       } else if (info.dimension === 2) {
         entry.minMax.z = convertToFloatArray(entry.minMax.z);
         dependentVariable.components = entry.minMax;
