@@ -34,7 +34,7 @@ export function getInfoFromJCAMP(metaData, options = {}) {
 
   info.nucleus = getNucleusFromMetadata(metaData, info, subfix);
   info.dimension = info.nucleus.length;
-  
+
   maybeAdd(info, 'title', metaData.TITLE);
   maybeAdd(info, 'solvent', metaData['.SOLVENTNAME']);
   maybeAdd(info, 'temperature', metaData[`${subfix}TE`] || metaData['.TE']);
