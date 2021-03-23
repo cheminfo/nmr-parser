@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.7.1](https://www.github.com/cheminfo/nmr-parser/compare/v0.7.0...v0.7.1) (2021-03-23)
+
+
+### Bug Fixes
+
+* compile package before publishing ([6ebd8e0](https://www.github.com/cheminfo/nmr-parser/commit/6ebd8e0ac9098b779ccade4228ea657ac288f472))
+
 ## [0.7.0](https://www.github.com/cheminfo/nmr-parser/compare/v0.6.0...v0.7.0) (2021-03-18)
 
 
