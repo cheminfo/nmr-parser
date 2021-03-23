@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.8.0](https://www.github.com/cheminfo/nmr-parser/compare/v0.7.1...v0.8.0) (2021-03-23)
+
+
+### Features
+
+* ignore <off> info in nucleus metadata ([#26](https://www.github.com/cheminfo/nmr-parser/issues/26)) ([3613df2](https://www.github.com/cheminfo/nmr-parser/commit/3613df22f32a2bc11b185bead4f559faf93822b3))
+
 ### [0.7.1](https://www.github.com/cheminfo/nmr-parser/compare/v0.7.0...v0.7.1) (2021-03-23)
 
 
