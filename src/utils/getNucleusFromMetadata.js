@@ -4,23 +4,13 @@ export function getNucleusFromMetadata(metaData, info, subfix) {
     // eslint-disable-next-line dot-notation
     nucleus = metaData[`${subfix}AXNUC`];
     if (!Array.isArray(nucleus)) nucleus = [nucleus];
-    nucleus = nucleus.map((value) =>
-      value
-        .replace(/[^A-Za-z0-9]/g, '')
-        .replace('NA', '')
-        .replace('off', ''),
-    );
-    let beforeLength = nucleus.length;
-    nucleus = nucleus.filter((value) => value);
-    if (nucleus.length !== beforeLength) nucleus = [];
+    nucleus = checkForNucleus(nucleus);
   }
 
   if (nucleus.length < 1 && metaData[`${subfix}NUC1`]) {
     nucleus = metaData[`${subfix}NUC1`];
     if (!Array.isArray(nucleus)) nucleus = [nucleus];
-    nucleus = nucleus.map((value) =>
-      value.replace(/[^A-Za-z0-9]/g, '').replace('NA', ''),
-    );
+    nucleus = checkForNucleus(nucleus);
   }
 
   if (nucleus.length === 0) {
@@ -31,6 +21,7 @@ export function getNucleusFromMetadata(metaData, info, subfix) {
     } else {
       nucleus = getNucleusFrom2DExperiment(info.experiment);
     }
+    nucleus = checkForNucleus(nucleus);
   }
 
   if (metaData['2D_X_NUCLEUS'] && metaData['2D_Y_NUCLEUS']) {
@@ -39,7 +30,6 @@ export function getNucleusFromMetadata(metaData, info, subfix) {
       metaData['2D_Y_NUCLEUS'].replace(/[^A-Za-z0-9]/g, ''),
     ];
   }
-
   return nucleus;
 }
 
@@ -65,4 +55,16 @@ function getNucleusFrom2DExperiment(experiment) {
     return ['1H', '1H'];
   }
   return [];
+}
+
+function checkForNucleus(nucleus) {
+  nucleus = nucleus.map((value) =>
+    value
+      .replace(/[^A-Za-z0-9]/g, '')
+      .replace('NA', '')
+      .replace('off', ''),
+  );
+  let beforeLength = nucleus.length;
+  nucleus = nucleus.filter((value) => value);
+  return nucleus.length !== beforeLength ? [] : nucleus;
 }
