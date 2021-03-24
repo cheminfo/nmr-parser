@@ -1,7 +1,6 @@
 export function getNucleusFromMetadata(metaData, info, subfix) {
   let nucleus = [];
   if (metaData[`${subfix}AXNUC`]) {
-    // eslint-disable-next-line dot-notation
     nucleus = metaData[`${subfix}AXNUC`];
     if (!Array.isArray(nucleus)) nucleus = [nucleus];
     nucleus = checkForNucleus(nucleus);
