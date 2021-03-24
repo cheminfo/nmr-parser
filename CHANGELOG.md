@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.0](https://www.github.com/cheminfo/nmr-parser/compare/v0.8.0...v1.0.0) (2021-03-24)
+
+
+### Bug Fixes
+
+* update dependencies ([08c8581](https://www.github.com/cheminfo/nmr-parser/commit/08c858102f12d853fb94cfa02e11d30d1e9b563c))
+
 ## [0.8.0](https://www.github.com/cheminfo/nmr-parser/compare/v0.7.1...v0.8.0) (2021-03-23)
 
 
@@ -184,5 +191,3 @@
 
 * add dataStructure tested for JEOL data ([232fef8](https://github.com/cheminfo/nmr-parser/commit/232fef8e7db3f116ba38b966ab50e39a43dc8c54))
 * add NMRDATA, DIMENSION and DEPENDENTVAR classes ([93adb53](https://github.com/cheminfo/nmr-parser/commit/93adb5367911ff6fb75362ce1b00d4693061285a))
-
-
