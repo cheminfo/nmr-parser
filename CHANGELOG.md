@@ -1,5 +1,12 @@
 # Changelog
 
+### [1.0.1](https://www.github.com/cheminfo/nmr-parser/compare/v1.0.0...v1.0.1) (2021-03-25)
+
+
+### Bug Fixes
+
+* use default export for package.json ([11de271](https://www.github.com/cheminfo/nmr-parser/commit/11de2714849acd08efd7fbdc35b55f8ab3a249ad))
+
 ## [1.0.0](https://www.github.com/cheminfo/nmr-parser/compare/v0.8.0...v1.0.0) (2021-03-24)
 
 
