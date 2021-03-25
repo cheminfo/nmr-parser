@@ -5,7 +5,7 @@
 [![Test coverage][codecov-image]][codecov-url]
 [![npm download][download-image]][download-url]
 
-This package has born from the necessity to find a common data structure for NMR spectra (1D and 2D) originally stored in different formats as an entry point for processing pipelines. Reading and parsing data in original format represents an important work load for open source projects that usually seek to propose improved data analysis pipelines. This package aims at reading any NMR format and create a JSON object that is human readable, with a scientifically meaningful structure and variable names, strongly inspired by the [work](https://doi.org/10.1371/journal.pone.0225953) by Grandinetti and coworkers, but with a few liberties. For instance, *camelCase* variable naming has been preferred over the one proposed in the original work.
+This package has born from the necessity to find a common data structure for NMR spectra (1D and 2D) originally stored in different formats as an entry point for processing pipelines. Reading and parsing data in original format represents an important work load for open source projects that usually seek to propose improved data analysis pipelines. This package aims at reading any NMR format and create a JSON object that is human readable, with a scientifically meaningful structure and variable names, strongly inspired by the [work](https://doi.org/10.1371/journal.pone.0225953) by Grandinetti and coworkers, but with a few liberties. For instance, _camelCase_ variable naming has been preferred over the one proposed in the original work.
 
 ### supported input formats
 
@@ -15,12 +15,10 @@ This package has born from the necessity to find a common data structure for NMR
 
 ### data formats under developpment
 
-
 - [nmredata](http://nmredata.org/)
 
-
-
 ### What this package isn't?
+
 - This package is not promoting a new format
 - This package is not a JavaScript implementation of [CSDM](https://doi.org/10.1371/journal.pone.0225953)
 - This data structure in not intended for storage
@@ -36,7 +34,7 @@ This package has born from the necessity to find a common data structure for NMR
 
 ```js
 // import JCAMP parser
-import { fromJCAMP }  from 'nmr-parser';
+import { fromJCAMP } from 'nmr-parser';
 
 // import test data
 import { jcamp } from 'jcamp-data-test';
@@ -48,39 +46,30 @@ let data = fromJCAMP(jcamp['aspirin-1h.fid.dx']);
 
 ```js
 // import JCAMP parser
-import { fromBruker }  from 'nmr-parser';
+import { fromBruker } from 'nmr-parser';
 
 // import burker data
 import { bruker } from 'bruker-data-test';
 
 let data = await fromBruker(bruker['aspirin-1h.zip'], { base64: true });
-
 ```
 
-### JEOL 
+### JEOL
 
 ```js
 // import JEOL parser
-import { fromJEOL }  from 'nmr-parser';
+import { fromJEOL } from 'nmr-parser';
 
 // import test data
 import { experiments } from 'jeol-data-test';
 
 let data = fromJEOL(
-      experiments['Rutin_3080ug200uL_DMSOd6_qHNMR_400MHz_Jeol.jdf'],
-    );
+  experiments['Rutin_3080ug200uL_DMSOd6_qHNMR_400MHz_Jeol.jdf'],
+);
 // result is a JSON object
 // {
 //         timeStamp: 1593098292162,
-//         version: [
-//           { 'nmr-parser': '0.1.0' },
-//           {
-//             brukerconverter: '^2.1.2',
-//             jcampconverter: '^5.0.2',
-//             jeolconverter: '0.1.6'
-//           },
-// ...
-//         ],
+//         version: '1.0.0'
 //         description: {
 //           title: 'title: Rutin_RUTI01_3080u200u / comment: qHNMR Spinning GARP Gated 13C Decoupled 20p 9pCntr 32K 90deg aq+d1=60s NS=128 / author:gfp / site: UIC ECZ400',
 //           nucleus: [ '1H' ],
@@ -89,7 +78,6 @@ let data = fromJEOL(
 // ...
 //           spectralWidth: 25.05370594702938,
 //           metadata: {...
-
 ```
 
 ## [API Documentation](https://cheminfo.github.io/nmr-parser/)

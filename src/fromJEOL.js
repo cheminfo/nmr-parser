@@ -1,7 +1,7 @@
 import { parseJEOL } from 'jeolconverter';
 import { gyromagneticRatio } from 'nmr-processing';
 
-import { version, dependencies, devDependencies } from '../package.json';
+import packageJson from '../package.json';
 
 import { formatDependentVariable } from './formatDependentVariable';
 import { formatLinearDimension } from './formatLinearDimension';
@@ -178,8 +178,8 @@ export function fromJEOL(buffer) {
   );
 
   let dataStructure = {
-    timeStamp: new Date().valueOf(),
-    version: [{ 'nmr-parser': version }, dependencies, devDependencies],
+    timeStamp: Date.now(),
+    version: packageJson.version,
     description,
     tags: ['magnetic resonance'].concat(newInfo.nucleus),
     application: {

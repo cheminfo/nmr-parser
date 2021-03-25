@@ -1,6 +1,6 @@
 import { convert } from 'jcampconverter';
 
-import { version, dependencies, devDependencies } from '../package.json';
+import packageJson from '../package.json';
 
 import { convertToFloatArray } from './utils/convertToFloatArray';
 import { getInfoFromJCAMP } from './utils/getInfoFromJCAMP';
@@ -61,7 +61,7 @@ export function fromJCAMP(buffer) {
         info,
         meta: metadata,
         timeStamp: new Date().valueOf(),
-        version: [{ 'nmr-parser': version }, dependencies, devDependencies],
+        version: packageJson.version,
       });
     }
   }

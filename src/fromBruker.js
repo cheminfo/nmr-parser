@@ -1,6 +1,6 @@
 import { convertZip as convertBruker } from 'brukerconverter';
 
-import { version, dependencies, devDependencies } from '../package.json';
+import packageJson from '../package.json';
 
 import { convertToFloatArray } from './utils/convertToFloatArray';
 import { getInfoFromJCAMP } from './utils/getInfoFromJCAMP';
@@ -67,7 +67,7 @@ export async function fromBruker(zipFile, options = {}) {
       info: info,
       meta: metadata,
       timeStamp: new Date().valueOf(),
-      version: [{ 'nmr-parser': version }, dependencies, devDependencies],
+      version: packageJson.version,
     });
   }
   return dataStructure;
