@@ -1,5 +1,12 @@
 # Changelog
 
+### [1.0.2](https://www.github.com/cheminfo/nmr-parser/compare/v1.0.1...v1.0.2) (2021-04-28)
+
+
+### Bug Fixes
+
+* update jcampconverter ([6b7be91](https://www.github.com/cheminfo/nmr-parser/commit/6b7be91cc461e231054ad215156e813fd0e41fbd))
+
 ### [1.0.1](https://www.github.com/cheminfo/nmr-parser/compare/v1.0.0...v1.0.1) (2021-03-25)
 
 
