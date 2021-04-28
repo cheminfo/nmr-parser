@@ -50,22 +50,22 @@
   "devDependencies": {
     "@babel/plugin-transform-modules-commonjs": "^7.13.8",
     "@rollup/plugin-json": "^4.1.0",
-    "@types/jest": "^26.0.21",
+    "@types/jest": "^26.0.23",
     "bruker-data-test": "^0.1.0",
     "cheminfo-build": "^1.1.10",
-    "eslint": "^7.22.0",
+    "eslint": "^7.25.0",
     "eslint-config-cheminfo": "^5.2.3",
     "jcamp-data-test": "^0.0.5",
     "jeol-data-test": "^0.2.3",
     "jest": "^26.6.3",
     "prettier": "^2.2.1",
-    "rollup": "^2.42.4"
+    "rollup": "^2.45.2"
   },
   "dependencies": {
     "brukerconverter": "^3.2.0",
     "is-any-array": "^1.0.0",
-    "jcampconverter": "^7.8.0",
+    "jcampconverter": "^8.0.1",
     "jeolconverter": "^1.0.0",
-    "nmr-processing": "^1.0.0"
+    "nmr-processing": "^1.2.0"
   }
 }
