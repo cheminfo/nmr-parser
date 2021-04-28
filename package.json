@@ -64,7 +64,7 @@
   "dependencies": {
     "brukerconverter": "^3.2.0",
     "is-any-array": "^1.0.0",
-    "jcampconverter": "^8.0.1",
+    "jcampconverter": "^8.0.2",
     "jeolconverter": "^1.0.0",
     "nmr-processing": "^1.2.0"
   }
