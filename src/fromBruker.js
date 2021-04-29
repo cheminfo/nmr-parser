@@ -40,6 +40,7 @@ export async function fromBruker(zipFile, options = {}) {
       entry.minMax.z = convertToFloatArray(entry.minMax.z);
       dependentVariable.components = entry.minMax;
     }
+
     let dimension = {
       increment: info.increment,
       numberOfPoints: info.numberOfPoints,
@@ -61,9 +62,12 @@ export async function fromBruker(zipFile, options = {}) {
     dimensions.push(dimension);
     dependentVariables.push(dependentVariable);
 
+    const { source } = entry;
+
     dataStructure.push({
       dimensions,
       dependentVariables,
+      source,
       info: info,
       meta: metadata,
       timeStamp: new Date().valueOf(),
