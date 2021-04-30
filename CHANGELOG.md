@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://www.github.com/cheminfo/nmr-parser/compare/v1.0.3...v1.1.0) (2021-04-29)
+
+
+### Features
+
+* update dependencies ([#32](https://www.github.com/cheminfo/nmr-parser/issues/32)) ([34ff50b](https://www.github.com/cheminfo/nmr-parser/commit/34ff50b52a394bcf49a4f6d24d157f70b776e73f))
+
 ### [1.0.3](https://www.github.com/cheminfo/nmr-parser/compare/v1.0.2...v1.0.3) (2021-04-28)
 
 
