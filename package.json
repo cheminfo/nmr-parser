@@ -48,7 +48,7 @@
     "trailingComma": "all"
   },
   "devDependencies": {
-    "@babel/plugin-transform-modules-commonjs": "^7.13.8",
+    "@babel/plugin-transform-modules-commonjs": "^7.14.0",
     "@rollup/plugin-json": "^4.1.0",
     "@types/jest": "^26.0.23",
     "bruker-data-test": "^0.1.0",
@@ -59,12 +59,12 @@
     "jeol-data-test": "^0.2.3",
     "jest": "^26.6.3",
     "prettier": "^2.2.1",
-    "rollup": "^2.45.2"
+    "rollup": "^2.47.0"
   },
   "dependencies": {
     "brukerconverter": "^3.3.0",
     "is-any-array": "^1.0.0",
-    "jcampconverter": "^8.0.2",
+    "jcampconverter": "^8.1.1",
     "jeolconverter": "^1.0.0",
     "nmr-processing": "^1.2.0"
   }
