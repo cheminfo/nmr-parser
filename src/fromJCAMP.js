@@ -5,6 +5,13 @@ import packageJson from '../package.json';
 import { convertToFloatArray } from './utils/convertToFloatArray';
 import { getInfoFromJCAMP } from './utils/getInfoFromJCAMP';
 
+const expectedTypes = [
+  'nd nmr spectrum',
+  'nd nmr fid',
+  'nmr spectrum',
+  'nmr fid',
+];
+
 export function fromJCAMP(buffer) {
   let parsedData = convert(buffer, {
     noContour: true,
@@ -15,6 +22,7 @@ export function fromJCAMP(buffer) {
   let dataStructure = [];
   let entries = parsedData.flatten;
   for (let entry of entries) {
+    if (!isSpectraData(entry)) continue;
     if ((entry.spectra && entry.spectra.length > 0) || entry.minMax) {
       let metadata = Object.assign({}, entry.info, entry.meta);
       let info = getInfoFromJCAMP(metadata);
@@ -67,4 +75,14 @@ export function fromJCAMP(buffer) {
   }
 
   return dataStructure;
+}
+
+function isSpectraData(entry) {
+  const { dataType = '', dataClass = '' } = entry;
+  const inputDataType = dataType.toLowerCase();
+  const inputDataClass = dataClass.toLowerCase();
+  return (
+    expectedTypes.some((type) => type === inputDataType) &&
+    inputDataClass !== 'peak table'
+  );
 }
