@@ -1,5 +1,13 @@
 # Changelog
 
+### [1.1.1](https://www.github.com/cheminfo/nmr-parser/compare/v1.1.0...v1.1.1) (2021-05-06)
+
+
+### Bug Fixes
+
+* **fromJCAMP:** only export xyData ([#36](https://www.github.com/cheminfo/nmr-parser/issues/36)) ([1f46dde](https://www.github.com/cheminfo/nmr-parser/commit/1f46ddec4898334692897b2894fe0210565f1063))
+* update dependencies ([b01ff76](https://www.github.com/cheminfo/nmr-parser/commit/b01ff7629326d2c5f314198ffefedae2bf4ebf45))
+
 ## [1.1.0](https://www.github.com/cheminfo/nmr-parser/compare/v1.0.3...v1.1.0) (2021-04-29)
 
 
