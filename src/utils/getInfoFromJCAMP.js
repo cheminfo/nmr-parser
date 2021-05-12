@@ -22,9 +22,6 @@ export function getInfoFromJCAMP(metaData, options = {}) {
   if (creator.includes('mestre') || creator.includes('nova')) {
     creator = 'mnova';
   }
-  if (creator.includes('bruker')) {
-    creator = 'bruker';
-  }
 
   if (creator === 'mnova') {
     if (metaData.LONGDATE) {
@@ -62,22 +59,29 @@ export function getInfoFromJCAMP(metaData, options = {}) {
 
   maybeAdd(info, 'originFrequency', metaData['.OBSERVEFREQUENCY']);
 
-  if (creator === 'bruker') {
+  if (creator !== 'mnova' && creator !== 'mestre') {
     const gyromagneticRatioConst = gyromagneticRatio[info.nucleus[0]];
     maybeAdd(info, 'probeName', metaData[`${subfix}PROBHD`]);
     maybeAdd(info, 'originFrequency', metaData[`${subfix}SFO1`]);
     maybeAdd(info, 'baseFrequency', metaData[`${subfix}BF1`]);
-    const { baseFrequency, originFrequency } = info;
-    let fieldStrength =
-      2 * Math.PI * (baseFrequency[0] / gyromagneticRatioConst) * 1e6;
-    let frequencyOffset = baseFrequency.map(
-      (bf, i) => (originFrequency[i] - bf) * 1e6,
-    );
 
-    maybeAdd(info, 'fieldStrength', fieldStrength);
-    maybeAdd(info, 'frequencyOffset', frequencyOffset);
+    if (!['baseFrequency', 'originFrequency'].some((e) => !info[e])) {
+      const { baseFrequency, originFrequency } = info;
+      let fieldStrength =
+        2 * Math.PI * (baseFrequency[0] / gyromagneticRatioConst) * 1e6;
+
+      let frequencyOffset = baseFrequency.map(
+        (bf, i) => (originFrequency[i] - bf) * 1e6,
+      );
+
+      maybeAdd(info, 'fieldStrength', fieldStrength);
+      maybeAdd(info, 'frequencyOffset', frequencyOffset);
+    }
     maybeAdd(info, 'spectralWidth', metaData[`${subfix}SW`]);
     maybeAdd(info, 'numberOfPoints', metaData[`${subfix}TD`]);
+
+    const numberOfPoints = info.numberOfPoints;
+
     maybeAdd(info, 'sampleName', metaData[`${subfix}NAME`]);
 
     if (metaData[`${subfix}FNTYPE`] !== undefined) {
@@ -98,46 +102,60 @@ export function getInfoFromJCAMP(metaData, options = {}) {
       maybeAdd(info, 'acquisitionTime', Number(value));
     }
 
-    const { numberOfPoints, spectralWidth } = info;
     if (!info.acquisitionTime) {
-      maybeAdd(
-        info,
-        'acquisitionTime',
-        Number(
-          (numberOfPoints[0] - 1) / (2 * spectralWidth[0] * originFrequency[0]),
-        ),
-      );
+      if (!['numberOfPoints', 'spectralWidth'].some((e) => !info[e])) {
+        const { spectralWidth, originFrequency } = info;
+        maybeAdd(
+          info,
+          'acquisitionTime',
+          Number(
+            (numberOfPoints[0] - 1) /
+              (2 * spectralWidth[0] * originFrequency[0]),
+          ),
+        );
+      }
     }
 
-    let pulseStrength =
-      1e6 / (metaData[`${subfix}P`].split(separator)[1].split(' ')[1] * 4);
-    maybeAdd(info, 'pulseStrength90', pulseStrength);
-    let relaxationTime = metaData[`${subfix}D`]
-      .split(separator)[1]
-      .split(' ')[1];
-    maybeAdd(info, 'relaxationTime', Number(relaxationTime));
+    if (metaData[`${subfix}P`]) {
+      let pulseStrength =
+        1e6 / (metaData[`${subfix}P`].split(separator)[1].split(' ')[1] * 4);
+      maybeAdd(info, 'pulseStrength90', pulseStrength);
+    }
+    if (metaData[`${subfix}D`]) {
+      let relaxationTime = metaData[`${subfix}D`]
+        .split(separator)[1]
+        .split(' ')[1];
+      maybeAdd(info, 'relaxationTime', Number(relaxationTime));
+    }
+
     maybeAdd(info, 'numberOfScans', Number(metaData[`${subfix}NS`]));
 
     let increment;
-    if (info.isFid) {
-      maybeAdd(info, 'groupDelay', metaData[`${subfix}GRPDLY`] || 0);
-      maybeAdd(info, 'DSPFVS', metaData[`${subfix}DSPFVS`]);
-      maybeAdd(info, 'DECIM', metaData[`${subfix}DECIM`]);
+    if (!['numberOfPoints', 'spectralWidth'].some((e) => !info[e])) {
+      const { spectralWidth, numberOfPoints } = info;
+      if (info.isFid) {
+        maybeAdd(info, 'groupDelay', metaData[`${subfix}GRPDLY`] || 0);
+        maybeAdd(info, 'DSPFVS', metaData[`${subfix}DSPFVS`]);
+        maybeAdd(info, 'DECIM', metaData[`${subfix}DECIM`]);
 
-      let { groupDelay, DSPFVS, DECIM } = info;
-      let digitalFilterParameters = getDigitalFilterParameters(
-        groupDelay[0],
-        DSPFVS[0],
-        DECIM[0],
-      );
-      maybeAdd(info, 'digitalFilter', digitalFilterParameters);
-      increment = numberOfPoints.map((nb) => {
-        return info.acquisitionTime[0] / (nb - 1);
-      });
-    } else {
-      increment = numberOfPoints.map((nb, i) => {
-        return spectralWidth[i] / (nb - 1);
-      });
+        if (!['groupDelay', 'DSPFVS', 'DECIM'].some((e) => !info[e])) {
+          let { groupDelay, DSPFVS, DECIM } = info;
+          let digitalFilterParameters = getDigitalFilterParameters(
+            groupDelay[0],
+            DSPFVS[0],
+            DECIM[0],
+          );
+          maybeAdd(info, 'digitalFilter', digitalFilterParameters);
+        }
+
+        increment = numberOfPoints.map((nb) => {
+          return info.acquisitionTime[0] / (nb - 1);
+        });
+      } else {
+        increment = numberOfPoints.map((nb, i) => {
+          return spectralWidth[i] / (nb - 1);
+        });
+      }
     }
 
     maybeAdd(info, 'increment', increment);
