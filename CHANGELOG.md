@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://www.github.com/cheminfo/nmr-parser/compare/v1.1.1...v1.2.0) (2021-05-12)
+
+
+### Features
+
+* not use creator bruker as indicator ([#38](https://www.github.com/cheminfo/nmr-parser/issues/38)) ([3f9ccc6](https://www.github.com/cheminfo/nmr-parser/commit/3f9ccc695709d4b1206624f9cd95f2d4d07562e0))
+
 ### [1.1.1](https://www.github.com/cheminfo/nmr-parser/compare/v1.1.0...v1.1.1) (2021-05-06)
 
 
