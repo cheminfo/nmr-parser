@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.0](https://www.github.com/cheminfo/nmr-parser/compare/v1.2.0...v1.3.0) (2021-05-18)
+
+
+### Features
+
+* update brukerconverter to 3.5.0 ([65d61f8](https://www.github.com/cheminfo/nmr-parser/commit/65d61f820671497993608a405d6a5a3dd3ec34b7))
+
 ## [1.2.0](https://www.github.com/cheminfo/nmr-parser/compare/v1.1.1...v1.2.0) (2021-05-12)
 
 
