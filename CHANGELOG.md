@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.0](https://www.github.com/cheminfo/nmr-parser/compare/v1.3.0...v1.4.0) (2021-05-25)
+
+
+### Features
+
+* remove space of dataClass\ ([1946755](https://www.github.com/cheminfo/nmr-parser/commit/1946755ddcc8a34f6cf90837c511eb200327ae76))
+
 ## [1.3.0](https://www.github.com/cheminfo/nmr-parser/compare/v1.2.0...v1.3.0) (2021-05-18)
 
 
