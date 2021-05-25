@@ -6,10 +6,10 @@ import { convertToFloatArray } from './utils/convertToFloatArray';
 import { getInfoFromJCAMP } from './utils/getInfoFromJCAMP';
 
 const expectedTypes = [
-  'nd nmr spectrum',
-  'nd nmr fid',
-  'nmr spectrum',
-  'nmr fid',
+  'ndnmrspectrum',
+  'ndnmrfid',
+  'nmrspectrum',
+  'nmrfid',
 ];
 
 export function fromJCAMP(buffer) {
@@ -19,6 +19,7 @@ export function fromJCAMP(buffer) {
     keepRecordsRegExp: /.*/,
     profiling: true,
   });
+
   let dataStructure = [];
   let entries = parsedData.flatten;
   for (let entry of entries) {
@@ -60,7 +61,6 @@ export function fromJCAMP(buffer) {
           units: 'ppm',
         };
       }
-
       dimensions.push(dimension);
       dependentVariables.push(dependentVariable);
       dataStructure.push({
@@ -79,8 +79,9 @@ export function fromJCAMP(buffer) {
 
 function isSpectraData(entry) {
   const { dataType = '', dataClass = '' } = entry;
-  const inputDataType = dataType.toLowerCase();
-  const inputDataClass = dataClass.toLowerCase();
+
+  const inputDataType = dataType.replace(/\s/g, '').toLowerCase();
+  const inputDataClass = dataClass.replace(/\s/g, '').toLowerCase();
   return (
     expectedTypes.some((type) => type === inputDataType) &&
     inputDataClass !== 'peak table'

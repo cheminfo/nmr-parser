@@ -15,7 +15,7 @@ const defaultOptions = {
 export async function fromBruker(zipFile, options = {}) {
   let parseData = await convertBruker(
     zipFile,
-    Object.assign({}, defaultOptions, options),
+    { ...defaultOptions, ...options },
   );
   let dataStructure = [];
   for (let element of parseData) {
