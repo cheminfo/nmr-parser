@@ -1,5 +1,12 @@
 # Changelog
 
+### [1.4.1](https://www.github.com/cheminfo/nmr-parser/compare/v1.4.0...v1.4.1) (2021-06-16)
+
+
+### Bug Fixes
+
+* export an array in fromJEOL ([8cdac4f](https://www.github.com/cheminfo/nmr-parser/commit/8cdac4f7395469c77465239ba8d4978e30ea0997))
+
 ## [1.4.0](https://www.github.com/cheminfo/nmr-parser/compare/v1.3.0...v1.4.0) (2021-05-25)
 
 
