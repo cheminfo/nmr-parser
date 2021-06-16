@@ -5,19 +5,21 @@ import packageJson from '../package.json';
 import { convertToFloatArray } from './utils/convertToFloatArray';
 import { getInfoFromJCAMP } from './utils/getInfoFromJCAMP';
 
-const expectedTypes = [
-  'ndnmrspectrum',
-  'ndnmrfid',
-  'nmrspectrum',
-  'nmrfid',
-];
+const expectedTypes = ['ndnmrspectrum', 'ndnmrfid', 'nmrspectrum', 'nmrfid'];
 
-export function fromJCAMP(buffer) {
+export function fromJCAMP(buffer, options = {}) {
+  const {
+    noContour = true,
+    xy = true,
+    keepRecordsRegExp = /.*/,
+    profiling = true,
+  } = options;
+
   let parsedData = convert(buffer, {
-    noContour: true,
-    xy: true,
-    keepRecordsRegExp: /.*/,
-    profiling: true,
+    noContour,
+    xy,
+    keepRecordsRegExp,
+    profiling,
   });
 
   let dataStructure = [];
@@ -63,14 +65,17 @@ export function fromJCAMP(buffer) {
       }
       dimensions.push(dimension);
       dependentVariables.push(dependentVariable);
-      dataStructure.push({
+
+      const data = {
         dimensions,
         dependentVariables,
         info,
         meta: metadata,
         timeStamp: new Date().valueOf(),
         version: packageJson.version,
-      });
+      };
+
+      dataStructure.push(data);
     }
   }
 

@@ -6,7 +6,7 @@ describe('test fromJEOL', () => {
   it('test dependentVariables fromJEOL and proton', () => {
     let data = fromJEOL(
       experiments['Rutin_3080ug200uL_DMSOd6_qHNMR_400MHz_Jeol.jdf'],
-    );
+    )[0];
     //console.log(data.description);
     expect(data.description.nucleus[0]).toStrictEqual('1H');
     expect(data.description.fieldStrength).toStrictEqual(9.389766);
@@ -24,7 +24,7 @@ describe('test fromJEOL', () => {
   it('test fromJEOL and processed proton', () => {
     let data = fromJEOL(
       experiments['8PA_SynLK_5360u150uDMSO_snc1811_qH_SpinOn-1-2.jdf'],
-    );
+    )[0];
     expect(data.description.nucleus[0]).toStrictEqual('1H');
     expect(data.dependentVariables[0].numericType).toStrictEqual('complex128');
     expect(data.dependentVariables[0].quantityType).toStrictEqual('scalar');
@@ -63,7 +63,7 @@ describe('test fromJEOL', () => {
   it('test dimensions fromJEOL and carbon', () => {
     let data = fromJEOL(
       experiments['Rutin_3080ug200uL_DMSOd6_13CNMR_400MHz_Jeol.jdf'],
-    );
+    )[0];
     expect(data.dimensions[0].label).toStrictEqual('Carbon13');
     expect(data.dimensions[0].type).toStrictEqual('linear');
     expect(data.dimensions[0].description).toStrictEqual('direct dimension');
@@ -80,7 +80,7 @@ describe('test fromJEOL', () => {
   it('test dimensions fromJEOL and HMBC', () => {
     let data = fromJEOL(
       experiments['Rutin_3080ug200uL_DMSOd6_HMBC_400MHz_Jeol.jdf'],
-    );
+    )[0];
     expect(data.dimensions[0].label).toStrictEqual('Proton');
     expect(data.dimensions[0].type).toStrictEqual('linear');
     expect(data.dimensions[0].description).toStrictEqual('direct dimension');
@@ -102,7 +102,7 @@ describe('test fromJEOL', () => {
   it('test dimensions fromJEOL and COSY', () => {
     let data = fromJEOL(
       experiments['Rutin_3080ug200uL_DMSOd6_COSY_400MHz_Jeol.jdf'],
-    );
+    )[0];
     expect(data.dimensions[0].label).toStrictEqual('Proton');
     expect(data.dimensions[0].type).toStrictEqual('linear');
     expect(data.dimensions[0].description).toStrictEqual('direct dimension');
@@ -124,7 +124,7 @@ describe('test fromJEOL', () => {
   it('test dimensions fromJEOL and HSQC', () => {
     let data = fromJEOL(
       experiments['Rutin_3080ug200uL_DMSOd6_HSQC_400MHz_Jeol.jdf'],
-    );
+    )[0];
     expect(data.description.nucleus[0]).toStrictEqual('1H');
     expect(data.description.nucleus[1]).toStrictEqual('13C');
     expect(data.dimensions[0].label).toStrictEqual('Proton');

@@ -189,5 +189,5 @@ export function fromJEOL(buffer) {
     dimensions: dimensions,
     dependentVariables: dependentVariables,
   };
-  return dataStructure;
+  return [dataStructure];
 }
