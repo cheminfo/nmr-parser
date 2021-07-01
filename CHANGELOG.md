@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.0](https://www.github.com/cheminfo/nmr-parser/compare/v1.5.0...v1.6.0) (2021-07-01)
+
+
+### Features
+
+* ensure that info properties has a numeric value or string ([3aab51a](https://www.github.com/cheminfo/nmr-parser/commit/3aab51afdfd74041bdd05042f729866c13a79296))
+
 ## [1.5.0](https://www.github.com/cheminfo/nmr-parser/compare/v1.4.1...v1.5.0) (2021-07-01)
 
 
