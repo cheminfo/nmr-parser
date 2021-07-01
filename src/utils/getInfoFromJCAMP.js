@@ -211,5 +211,6 @@ function removeUnless(value) {
     }
     value = value.trim();
   }
-  return value.match && value.match(/[A-Za-z]/g) ? value : parseFloat(value);
+  const parsedValue = parseFloat(value);
+  return isNaN(parsedValue) ? value : parsedValue;
 }
