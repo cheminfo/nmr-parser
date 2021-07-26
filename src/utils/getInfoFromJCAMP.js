@@ -211,6 +211,5 @@ function removeUnless(value) {
     }
     value = value.trim();
   }
-  const parsedValue = parseFloat(value);
-  return !isNaN(value) && !isNaN(parsedValue) ? parsedValue : value;
+  return value
 }
