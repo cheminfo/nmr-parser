@@ -1,5 +1,12 @@
 # Changelog
 
+### [1.6.2](https://www.github.com/cheminfo/nmr-parser/compare/v1.6.1...v1.6.2) (2021-08-31)
+
+
+### Bug Fixes
+
+* update jeolconverter to 1.0.1 ([6af7d71](https://www.github.com/cheminfo/nmr-parser/commit/6af7d7158fd25ab30ba32722506635372a1d0800))
+
 ### [1.6.1](https://www.github.com/cheminfo/nmr-parser/compare/v1.6.0...v1.6.1) (2021-07-29)
 
 
