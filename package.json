@@ -65,7 +65,7 @@
     "brukerconverter": "^3.5.0",
     "is-any-array": "^1.0.0",
     "jcampconverter": "^8.1.5",
-    "jeolconverter": "^1.0.0",
+    "jeolconverter": "^1.0.1",
     "nmr-processing": "^2.1.2"
   }
 }
