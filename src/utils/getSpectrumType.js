@@ -87,5 +87,9 @@ export function getSpectrumType(meta = {}, info = {}, options = {}) {
     return 'aptjmod';
   }
 
+  if (pulse.includes('inad')) {
+    return 'inadequate';
+  }
+  
   return meta.dimension ? `${meta.dimension}d` : '';
 }
