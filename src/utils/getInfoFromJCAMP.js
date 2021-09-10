@@ -211,5 +211,5 @@ function removeUnless(value) {
     }
     value = value.trim();
   }
-  return value
+  return value;
 }
