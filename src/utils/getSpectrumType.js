@@ -14,7 +14,7 @@ export function getSpectrumType(meta = {}, info = {}, options = {}) {
     .replace(/^<(.*)>$/, '$1') // eslint-disable-line prefer-named-capture-group
     .toLowerCase();
 
-  if (spectyp.length > 0) return spectyp;
+  if (spectyp.length > 0 && spectyp !== 'undefined') return spectyp;
 
   let pulse = Array.isArray(meta.pulseSequence)
     ? meta.pulseSequence[0]
