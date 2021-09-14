@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.7.0](https://www.github.com/cheminfo/nmr-parser/compare/v1.6.2...v1.7.0) (2021-09-14)
+
+
+### Features
+
+* add inadequte ([d1ff2db](https://www.github.com/cheminfo/nmr-parser/commit/d1ff2dbd4fef871904ede28ab6b919ae5b596513))
+
+
+### Bug Fixes
+
+* no use of undefined spectyp ([#50](https://www.github.com/cheminfo/nmr-parser/issues/50)) ([d49e48b](https://www.github.com/cheminfo/nmr-parser/commit/d49e48b5a5abf7af4edac77f6fcf0a040309b20e))
+
 ### [1.6.2](https://www.github.com/cheminfo/nmr-parser/compare/v1.6.1...v1.6.2) (2021-08-31)
 
 
