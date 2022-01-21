@@ -1,4 +1,4 @@
-import isAnyArray from 'is-any-array';
+import { isAnyArray } from 'is-any-array';
 
 import { numericTypeTable, quantityTypeTable } from './constantTables';
 /**

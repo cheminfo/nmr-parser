@@ -1,4 +1,4 @@
-import isAnyArray from 'is-any-array';
+import { isAnyArray } from 'is-any-array';
 
 export function convertToFloatArray(data) {
   if (isAnyArray(data[0])) {
