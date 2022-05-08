@@ -1,5 +1,6 @@
 import { jcamp } from 'jcamp-data-test';
-
+import { readFileSync } from 'fs';
+import { join } from 'path';
 import { fromJCAMP } from '../fromJCAMP';
 
 describe('test fromJCAMP', () => {
@@ -13,9 +14,7 @@ describe('test fromJCAMP', () => {
     expect(info.date).toBe('2006-01-31T09:24:52.000Z');
     expect(info.solvent).toBe('CDCl3');
     expect(info.temperature).toBe(298);
-    expect(info.probeName).toBe(
-      '5 mm Multinuclear inverse Z-grad Z8255/0040',
-    );
+    expect(info.probeName).toBe('5 mm Multinuclear inverse Z-grad Z8255/0040');
     expect(info.fieldStrength).toBeCloseTo(7.049031799126325, 3);
     expect(info.baseFrequency).toBe(300.13);
     expect(info.pulseSequence).toBe('zg30');
@@ -33,6 +32,26 @@ describe('test fromJCAMP', () => {
     expect(info.frequencyOffset).toBeCloseTo(2250.974999981281, 5);
     expect(info.spectralWidth).toBeCloseTo(15.9572055821827, 5);
     expect(info.acquisitionTime).toBeCloseTo(1.7102808, 5);
+  });
+
+  it('test fromJCAMP for ibuprofen (qmagnetics)', () => {
+    let data = fromJCAMP(readFileSync(join(__dirname, 'qmagnetics.jdx')));
+    let info = data[0].info;
+    expect(info).toStrictEqual({
+      dimension: 1,
+      nucleus: ['1H'],
+      isFid: true,
+      isFt: false,
+      isComplex: true,
+      title: 'nmr_data/ibuprofen j_ave.jdx',
+      solvent: 'Neat',
+      type: 'NMR FID',
+      pulseSequence: 'NScanPulseAcquire',
+      experiment: '1d',
+      originFrequency: 123.8826,
+      acquisitionTime: 3.9999,
+      numberOfScans: 500,
+    });
   });
 
   it('test fromJCAMP for Rutin (Jeol)', () => {

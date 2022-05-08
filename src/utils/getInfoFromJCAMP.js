@@ -57,7 +57,7 @@ export function getInfoFromJCAMP(metaData, options = {}) {
   );
   maybeAdd(info, 'experiment', getSpectrumType(info, metaData, { subfix }));
 
-  maybeAdd(info, 'originFrequency', metaData['.OBSERVEFREQUENCY']);
+  maybeAddNumber(info, 'originFrequency', metaData['.OBSERVEFREQUENCY']);
 
   if (creator !== 'mnova' && creator !== 'mestre') {
     const gyromagneticRatioConst = gyromagneticRatio[info.nucleus[0]];
@@ -99,7 +99,7 @@ export function getInfoFromJCAMP(metaData, options = {}) {
         typeof metaData.LAST === 'string' || metaData.LAST instanceof String
           ? metaData.LAST.replace(' ', '').split(',')[0]
           : metaData.LAST;
-      maybeAdd(info, 'acquisitionTime', Number(value));
+      maybeAddNumber(info, 'acquisitionTime', value);
     }
 
     if (!info.acquisitionTime) {
@@ -125,10 +125,11 @@ export function getInfoFromJCAMP(metaData, options = {}) {
       let relaxationTime = metaData[`${subfix}D`]
         .split(separator)[1]
         .split(' ')[1];
-      maybeAdd(info, 'relaxationTime', Number(relaxationTime));
+      maybeAddNumber(info, 'relaxationTime', relaxationTime);
     }
 
-    maybeAdd(info, 'numberOfScans', Number(metaData[`${subfix}NS`]));
+    maybeAddNumber(info, 'numberOfScans', metaData[`${subfix}NS`]);
+    maybeAddNumber(info, 'numberOfScans', metaData[`${subfix}QM_NSCANS`]);
 
     let increment;
     if (!['numberOfPoints', 'spectralWidth'].some((e) => !info[e])) {
@@ -192,19 +193,24 @@ export function getInfoFromJCAMP(metaData, options = {}) {
   return info;
 }
 
+function maybeAddNumber(obj, name, value) {
+  if (value === undefined) return;
+  if (typeof value === 'string') {
+    value = Number(value.replace(/\$.*/, ''));
+  }
+  maybeAdd(obj, name, value);
+}
+
 function maybeAdd(obj, name, value) {
-  if (value !== undefined) {
-    if (Array.isArray(value)) {
-      obj[name] = value.map((v) => {
-        return removeUnless(v);
-      });
-    } else {
-      obj[name] = [removeUnless(value)];
-    }
+  if (value === undefined) return;
+  if (Array.isArray(value)) {
+    obj[name] = value.map(cleanValue);
+  } else {
+    obj[name] = [cleanValue(value)];
   }
 }
 
-function removeUnless(value) {
+function cleanValue(value) {
   if (typeof value === 'string') {
     if (value.startsWith('<') && value.endsWith('>')) {
       value = value.substring(1, value.length - 1);
