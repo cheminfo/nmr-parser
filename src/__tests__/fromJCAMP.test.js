@@ -1,6 +1,8 @@
-import { jcamp } from 'jcamp-data-test';
 import { readFileSync } from 'fs';
 import { join } from 'path';
+
+import { jcamp } from 'jcamp-data-test';
+
 import { fromJCAMP } from '../fromJCAMP';
 
 describe('test fromJCAMP', () => {
