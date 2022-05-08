@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.8.0](https://www.github.com/cheminfo/nmr-parser/compare/v1.7.3...v1.8.0) (2022-05-08)
+
+
+### Features
+
+* parse q Magnetics 1D jcamp ([9f5640c](https://www.github.com/cheminfo/nmr-parser/commit/9f5640cb270afcad91fe95d5c1a4de6025b20ed7))
+* update dependencies ([f417e78](https://www.github.com/cheminfo/nmr-parser/commit/f417e786ba90516ada809d62ae9b50fb80eeb638))
+
 ### [1.7.3](https://www.github.com/cheminfo/nmr-parser/compare/v1.7.2...v1.7.3) (2022-02-25)
 
 
