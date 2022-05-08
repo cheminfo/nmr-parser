@@ -48,24 +48,24 @@
     "trailingComma": "all"
   },
   "devDependencies": {
-    "@babel/plugin-transform-modules-commonjs": "^7.16.8",
+    "@babel/plugin-transform-modules-commonjs": "^7.17.9",
     "@rollup/plugin-json": "^4.1.0",
-    "@types/jest": "^27.4.1",
+    "@types/jest": "^27.5.0",
     "bruker-data-test": "^0.1.0",
     "cheminfo-build": "^1.1.11",
-    "eslint": "^8.9.0",
-    "eslint-config-cheminfo": "^7.2.2",
+    "eslint": "^8.15.0",
+    "eslint-config-cheminfo": "^7.3.0",
     "jcamp-data-test": "^0.0.5",
     "jeol-data-test": "^0.2.3",
-    "jest": "^27.5.1",
-    "prettier": "^2.5.1",
-    "rollup": "^2.68.0"
+    "jest": "^28.1.0",
+    "prettier": "^2.6.2",
+    "rollup": "^2.72.1"
   },
   "dependencies": {
     "brukerconverter": "^3.5.0",
     "is-any-array": "^2.0.0",
-    "jcampconverter": "^8.2.5",
+    "jcampconverter": "^9.0.1",
     "jeolconverter": "^1.0.1",
-    "nmr-processing": "^7.0.1"
+    "nmr-processing": "^8.0.0"
   }
 }
