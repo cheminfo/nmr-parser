@@ -1,4 +1,4 @@
-import { convertZip as convertBruker } from 'brukerconverter';
+import { convertFileList } from 'brukerconverter';
 
 import packageJson from '../package.json';
 
@@ -12,14 +12,13 @@ const defaultOptions = {
   profiling: true,
 };
 
-export async function fromBruker(zipFile, options = {}) {
-  let parseData = await convertBruker(
-    zipFile,
+export async function fromBruker(fileList, options = {}) {
+  let parseData = await convertFileList(
+    fileList,
     { ...defaultOptions, ...options },
   );
   let dataStructure = [];
-  for (let element of parseData) {
-    let entry = element.value;
+  for (let entry of parseData) {
     let metadata = Object.assign({}, entry.info, entry.meta);
     let info = getInfoFromJCAMP(metadata);
 
@@ -31,10 +30,6 @@ export async function fromBruker(zipFile, options = {}) {
     let dependentVariable = {};
 
     if (info.dimension === 1) {
-      for (let i = 0; i < entry.spectra.length; i++) {
-        let data = entry.spectra[i].data;
-        data = convertToFloatArray(data);
-      }
       dependentVariable.components = entry.spectra;
     } else if (info.dimension === 2) {
       entry.minMax.z = convertToFloatArray(entry.minMax.z);
