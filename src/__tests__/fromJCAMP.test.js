@@ -51,6 +51,10 @@ describe('test fromJCAMP', () => {
       pulseSequence: 'NScanPulseAcquire',
       experiment: '1d',
       originFrequency: 123.8826,
+      baseFrequency: 123.8826,
+      fieldStrength: 2.9095804710021693,
+      frequencyOffset: 0,
+      spectralWidth: 10,
       acquisitionTime: 3.9999,
       numberOfScans: 500,
     });

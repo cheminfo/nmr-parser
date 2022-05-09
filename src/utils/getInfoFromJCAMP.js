@@ -52,18 +52,20 @@ export function getInfoFromJCAMP(metaData, options = {}) {
     info,
     'pulseSequence',
     metaData['.PULSESEQUENCE'] ||
-      metaData['.PULPROG'] ||
-      metaData[`${subfix}PULPROG`],
+    metaData['.PULPROG'] ||
+    metaData[`${subfix}PULPROG`],
   );
   maybeAdd(info, 'experiment', getSpectrumType(info, metaData, { subfix }));
 
   maybeAddNumber(info, 'originFrequency', metaData['.OBSERVEFREQUENCY']);
-
   if (creator !== 'mnova' && creator !== 'mestre') {
     const gyromagneticRatioConst = gyromagneticRatio[info.nucleus[0]];
     maybeAdd(info, 'probeName', metaData[`${subfix}PROBHD`]);
     maybeAdd(info, 'originFrequency', metaData[`${subfix}SFO1`]);
     maybeAdd(info, 'baseFrequency', metaData[`${subfix}BF1`]);
+    if (!('baseFrequency' in info) && ('originFrequency' in info)) {
+      maybeAdd(info, 'baseFrequency', info.originFrequency);
+    }
 
     if (!['baseFrequency', 'originFrequency'].some((e) => !info[e])) {
       const { baseFrequency, originFrequency } = info;
@@ -77,7 +79,9 @@ export function getInfoFromJCAMP(metaData, options = {}) {
       maybeAdd(info, 'fieldStrength', fieldStrength);
       maybeAdd(info, 'frequencyOffset', frequencyOffset);
     }
-    maybeAdd(info, 'spectralWidth', metaData[`${subfix}SW`]);
+    maybeAddNumber(info, 'spectralWidth', metaData[`${subfix}SW`]);
+    maybeAddNumber(info, 'spectralWidth', metaData[`${subfix}QM_SPECTRAL_WIDTH`]);
+
     maybeAdd(info, 'numberOfPoints', metaData[`${subfix}TD`]);
 
     const numberOfPoints = info.numberOfPoints;
@@ -110,7 +114,7 @@ export function getInfoFromJCAMP(metaData, options = {}) {
           'acquisitionTime',
           Number(
             (numberOfPoints[0] - 1) /
-              (2 * spectralWidth[0] * originFrequency[0]),
+            (2 * spectralWidth[0] * originFrequency[0]),
           ),
         );
       }
