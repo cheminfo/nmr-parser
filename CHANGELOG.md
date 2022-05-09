@@ -1,5 +1,12 @@
 # Changelog
 
+### [1.8.1](https://www.github.com/cheminfo/nmr-parser/compare/v1.8.0...v1.8.1) (2022-05-09)
+
+
+### Bug Fixes
+
+* include more info of qmagnetic ([823c4d3](https://www.github.com/cheminfo/nmr-parser/commit/823c4d31349807a0f26f79ce2d7ab49ac707840e))
+
 ## [1.8.0](https://www.github.com/cheminfo/nmr-parser/compare/v1.7.3...v1.8.0) (2022-05-08)
 
 
