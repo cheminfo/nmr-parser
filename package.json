@@ -64,6 +64,7 @@
   "dependencies": {
     "brukerconverter": "^4.0.0",
     "filelist-from": "^0.3.0",
+    "filelist-utils": "^0.5.0",
     "is-any-array": "^2.0.0",
     "jcampconverter": "^9.0.1",
     "jeolconverter": "^1.0.1",

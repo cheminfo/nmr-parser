@@ -1,4 +1,6 @@
 import { convertFileList } from 'brukerconverter';
+import { fileListFromZip } from 'filelist-from';
+
 
 import packageJson from '../package.json';
 
@@ -6,13 +8,16 @@ import { convertToFloatArray } from './utils/convertToFloatArray';
 import { getInfoFromJCAMP } from './utils/getInfoFromJCAMP';
 
 const defaultOptions = {
-  noContour: true,
-  xy: true,
-  keepRecordsRegExp: /.*/,
-  profiling: true,
+  converter: {
+    xy: true,
+    noContour: true,
+    keepRecordsRegExp: /.*/,
+    profiling: true,
+  }
 };
 
-export async function fromBruker(fileList, options = {}) {
+export async function fromBruker(zipFile, options = {}) {
+  const fileList = await fileListFromZip(zipFile);
   let parseData = await convertFileList(
     fileList,
     { ...defaultOptions, ...options },
@@ -21,8 +26,6 @@ export async function fromBruker(fileList, options = {}) {
   for (let entry of parseData) {
     let metadata = Object.assign({}, entry.info, entry.meta);
     let info = getInfoFromJCAMP(metadata);
-
-    if (info.experiment === 'wobble_curve') continue;
 
     let dimensions = [];
     let dependentVariables = [];
