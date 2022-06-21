@@ -1,5 +1,4 @@
 import { getZipped } from 'bruker-data-test';
-import { fileListFromZip } from 'filelist-from';
 
 import { fromBruker } from '../fromBruker';
 
@@ -8,8 +7,7 @@ describe('testfromBruker', () => {
     const brukerZip = await getZipped()
       .filter((file) => file.name === 'aspirin-1h.zip')[0]
       .arrayBuffer();
-    const fileList = await fileListFromZip(brukerZip);
-    let data = await fromBruker(fileList);
+    let data = await fromBruker(brukerZip);
     let info = data[0].info;
     expect(info.nucleus[0]).toBe('1H');
     // expect(info.title).toStrictEqual('1H BBI'); // diferente
