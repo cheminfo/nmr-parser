@@ -51,7 +51,7 @@
     "@babel/plugin-transform-modules-commonjs": "^7.17.9",
     "@rollup/plugin-json": "^4.1.0",
     "@types/jest": "^27.5.0",
-    "bruker-data-test": "^0.1.0",
+    "bruker-data-test": "^0.2.1",
     "cheminfo-build": "^1.1.11",
     "eslint": "^8.15.0",
     "eslint-config-cheminfo": "^7.3.0",
@@ -62,7 +62,9 @@
     "rollup": "^2.72.1"
   },
   "dependencies": {
-    "brukerconverter": "^3.5.0",
+    "brukerconverter": "^4.0.0",
+    "filelist-from": "^0.3.0",
+    "filelist-utils": "^0.5.0",
     "is-any-array": "^2.0.0",
     "jcampconverter": "^9.0.1",
     "jeolconverter": "^1.0.1",

@@ -1,4 +1,6 @@
-import { convertZip as convertBruker } from 'brukerconverter';
+import { convertFileList } from 'brukerconverter';
+import { fileListFromZip } from 'filelist-from';
+
 
 import packageJson from '../package.json';
 
@@ -6,24 +8,24 @@ import { convertToFloatArray } from './utils/convertToFloatArray';
 import { getInfoFromJCAMP } from './utils/getInfoFromJCAMP';
 
 const defaultOptions = {
-  noContour: true,
-  xy: true,
-  keepRecordsRegExp: /.*/,
-  profiling: true,
+  converter: {
+    xy: true,
+    noContour: true,
+    keepRecordsRegExp: /.*/,
+    profiling: true,
+  }
 };
 
 export async function fromBruker(zipFile, options = {}) {
-  let parseData = await convertBruker(
-    zipFile,
+  const fileList = await fileListFromZip(zipFile);
+  let parseData = await convertFileList(
+    fileList,
     { ...defaultOptions, ...options },
   );
   let dataStructure = [];
-  for (let element of parseData) {
-    let entry = element.value;
+  for (let entry of parseData) {
     let metadata = Object.assign({}, entry.info, entry.meta);
     let info = getInfoFromJCAMP(metadata);
-
-    if (info.experiment === 'wobble_curve') continue;
 
     let dimensions = [];
     let dependentVariables = [];
@@ -31,10 +33,6 @@ export async function fromBruker(zipFile, options = {}) {
     let dependentVariable = {};
 
     if (info.dimension === 1) {
-      for (let i = 0; i < entry.spectra.length; i++) {
-        let data = entry.spectra[i].data;
-        data = convertToFloatArray(data);
-      }
       dependentVariable.components = entry.spectra;
     } else if (info.dimension === 2) {
       entry.minMax.z = convertToFloatArray(entry.minMax.z);

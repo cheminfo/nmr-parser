@@ -1,11 +1,13 @@
-import { bruker } from 'bruker-data-test';
+import { getZipped } from 'bruker-data-test';
 
 import { fromBruker } from '../fromBruker';
 
 describe('testfromBruker', () => {
   it('test fromBruker for aspirin (bruker)', async () => {
-    // console.log(bruker['aspirin-1h.zip'])
-    let data = await fromBruker(bruker['aspirin-1h.zip'], { base64: true });
+    const brukerZip = await getZipped()
+      .filter((file) => file.name === 'aspirin-1h.zip')[0]
+      .arrayBuffer();
+    let data = await fromBruker(brukerZip);
     let info = data[0].info;
     expect(info.nucleus[0]).toBe('1H');
     // expect(info.title).toStrictEqual('1H BBI'); // diferente
@@ -14,9 +16,7 @@ describe('testfromBruker', () => {
     expect(info.date).toBe('2006-01-31T09:24:52.000Z');
     expect(info.solvent).toBe('CDCl3');
     expect(info.temperature).toBe(298);
-    expect(info.probeName).toBe(
-      '5 mm Multinuclear inverse Z-grad Z8255/0040',
-    );
+    expect(info.probeName).toBe('5 mm Multinuclear inverse Z-grad Z8255/0040');
     expect(info.fieldStrength).toBeCloseTo(7.049031799126325, 3);
     expect(info.baseFrequency).toBe(300.13);
     expect(info.pulseSequence).toBe('zg30');
