@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.9.0](https://www.github.com/cheminfo/nmr-parser/compare/v1.8.1...v1.9.0) (2022-06-22)
+
+
+### Features
+
+* **fromBruker:** new filtering options ([12b0fa9](https://www.github.com/cheminfo/nmr-parser/commit/12b0fa952a54f4871db6f96474049fff644cc13c))
+* update brukerconverter ([#57](https://www.github.com/cheminfo/nmr-parser/issues/57)) ([ec260fa](https://www.github.com/cheminfo/nmr-parser/commit/ec260fa6bff17bfe0aecf731afccb566ba3e8148))
+
 ### [1.8.1](https://www.github.com/cheminfo/nmr-parser/compare/v1.8.0...v1.8.1) (2022-05-09)
 
 
