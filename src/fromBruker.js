@@ -16,8 +16,7 @@ const defaultOptions = {
   }
 };
 
-export async function fromBruker(zipFile, options = {}) {
-  const fileList = await fileListFromZip(zipFile);
+export async function fromBruker(fileList, options = {}) {
   let parseData = await convertFileList(
     fileList,
     { ...defaultOptions, ...options },
