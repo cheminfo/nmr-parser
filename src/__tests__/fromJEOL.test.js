@@ -3,14 +3,11 @@ import { getData } from 'jeol-data-test';
 import { fromJEOL } from '../fromJEOL';
 
 describe('test fromJEOL', () => {
-  const jeolData = getData();
   it('test dependentVariables fromJEOL and proton', async () => {
-    let data = fromJEOL(
-      await jeolData.find(
-        (data) =>
-          data.name === 'Rutin_3080ug200uL_DMSOd6_qHNMR_400MHz_Jeol.jdf',
-      ).arrayBuffer(),
-    )[0];
+    const jeolBuffer = await getData(
+      'Rutin_3080ug200uL_DMSOd6_qHNMR_400MHz_Jeol.jdf',
+    );
+    let data = fromJEOL(jeolBuffer)[0];
 
     expect(data.description.nucleus[0]).toBe('1H');
     expect(data.description.fieldStrength).toBe(9.389766);
@@ -26,12 +23,10 @@ describe('test fromJEOL', () => {
   });
 
   it('test fromJEOL and processed proton', async () => {
-    let data = fromJEOL(
-      await jeolData.find(
-        (data) =>
-          data.name === '8PA_SynLK_5360u150uDMSO_snc1811_qH_SpinOn-1-2.jdf',
-      ).arrayBuffer(),
-    )[0];
+    const jeolBuffer = await getData(
+      '8PA_SynLK_5360u150uDMSO_snc1811_qH_SpinOn-1-2.jdf',
+    );
+    let data = fromJEOL(jeolBuffer)[0];
     expect(data.description.nucleus[0]).toBe('1H');
     expect(data.dependentVariables[0].numericType).toBe('complex128');
     expect(data.dependentVariables[0].quantityType).toBe('scalar');
@@ -64,13 +59,10 @@ describe('test fromJEOL', () => {
   });
 
   it('test dimensions fromJEOL and carbon', async () => {
-    let data = fromJEOL(
-      await jeolData.find(
-        (data) =>
-          data.name === 'Rutin_3080ug200uL_DMSOd6_13CNMR_400MHz_Jeol.jdf',
-      ).arrayBuffer(),
-    )[0];
-
+    const jeolBuffer = await getData(
+      'Rutin_3080ug200uL_DMSOd6_13CNMR_400MHz_Jeol.jdf',
+    );
+    let data = fromJEOL(jeolBuffer)[0];
     expect(data.dimensions[0].label).toBe('Carbon13');
     expect(data.dimensions[0].type).toBe('linear');
     expect(data.dimensions[0].description).toBe('direct dimension');
@@ -85,12 +77,10 @@ describe('test fromJEOL', () => {
   });
 
   it('test dimensions fromJEOL and HMBC', async () => {
-    let data = fromJEOL(
-      await jeolData.find(
-        (data) =>
-          data.name === 'Rutin_3080ug200uL_DMSOd6_HMBC_400MHz_Jeol.jdf',
-      ).arrayBuffer(),
-    )[0];
+    const jeolBuffer = await getData(
+      'Rutin_3080ug200uL_DMSOd6_HMBC_400MHz_Jeol.jdf',
+    );
+    let data = fromJEOL(jeolBuffer)[0];
     expect(data.dimensions[0].label).toBe('Proton');
     expect(data.dimensions[0].type).toBe('linear');
     expect(data.dimensions[0].description).toBe('direct dimension');
@@ -110,13 +100,10 @@ describe('test fromJEOL', () => {
   });
 
   it('test dimensions fromJEOL and COSY', async () => {
-    let data = fromJEOL(
-      await jeolData.find(
-        (data) =>
-          data.name === 'Rutin_3080ug200uL_DMSOd6_COSY_400MHz_Jeol.jdf',
-      ).arrayBuffer(),
-    )[0];
-
+    const jeolBuffer = await getData(
+      'Rutin_3080ug200uL_DMSOd6_COSY_400MHz_Jeol.jdf',
+    );
+    let data = fromJEOL(jeolBuffer)[0];
     expect(data.dimensions[0].label).toBe('Proton');
     expect(data.dimensions[0].type).toBe('linear');
     expect(data.dimensions[0].description).toBe('direct dimension');
@@ -136,13 +123,10 @@ describe('test fromJEOL', () => {
   });
 
   it('test dimensions fromJEOL and HSQC', async () => {
-    let data = fromJEOL(
-      await jeolData.find(
-        (data) =>
-          data.name === 'Rutin_3080ug200uL_DMSOd6_HSQC_400MHz_Jeol.jdf',
-      ).arrayBuffer(),
-    )[0];
-
+    const jeolBuffer = await getData(
+      'Rutin_3080ug200uL_DMSOd6_HSQC_400MHz_Jeol.jdf',
+    );
+    let data = fromJEOL(jeolBuffer)[0];
     expect(data.description.nucleus[0]).toBe('1H');
     expect(data.description.nucleus[1]).toBe('13C');
     expect(data.dimensions[0].label).toBe('Proton');
