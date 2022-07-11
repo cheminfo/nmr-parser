@@ -1,11 +1,14 @@
 import { convertFileList } from 'brukerconverter';
-import { fileListFromZip } from 'filelist-from';
-
 
 import packageJson from '../package.json';
 
 import { convertToFloatArray } from './utils/convertToFloatArray';
 import { getInfoFromJCAMP } from './utils/getInfoFromJCAMP';
+
+/**
+ * convert/export all the file with a Bruker structure like. It is a wrapper of brukerconverter
+ * the same options you can pass.
+ */
 
 const defaultOptions = {
   converter: {
@@ -13,14 +16,14 @@ const defaultOptions = {
     noContour: true,
     keepRecordsRegExp: /.*/,
     profiling: true,
-  }
+  },
 };
 
 export async function fromBruker(fileList, options = {}) {
-  let parseData = await convertFileList(
-    fileList,
-    { ...defaultOptions, ...options },
-  );
+  let parseData = await convertFileList(fileList, {
+    ...defaultOptions,
+    ...options,
+  });
   let dataStructure = [];
   for (let entry of parseData) {
     let metadata = Object.assign({}, entry.info, entry.meta);

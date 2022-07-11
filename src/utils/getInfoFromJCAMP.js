@@ -52,8 +52,8 @@ export function getInfoFromJCAMP(metaData, options = {}) {
     info,
     'pulseSequence',
     metaData['.PULSESEQUENCE'] ||
-    metaData['.PULPROG'] ||
-    metaData[`${subfix}PULPROG`],
+      metaData['.PULPROG'] ||
+      metaData[`${subfix}PULPROG`],
   );
   maybeAdd(info, 'experiment', getSpectrumType(info, metaData, { subfix }));
 
@@ -63,7 +63,7 @@ export function getInfoFromJCAMP(metaData, options = {}) {
     maybeAdd(info, 'probeName', metaData[`${subfix}PROBHD`]);
     maybeAdd(info, 'originFrequency', metaData[`${subfix}SFO1`]);
     maybeAdd(info, 'baseFrequency', metaData[`${subfix}BF1`]);
-    if (!('baseFrequency' in info) && ('originFrequency' in info)) {
+    if (!('baseFrequency' in info) && 'originFrequency' in info) {
       maybeAdd(info, 'baseFrequency', info.originFrequency);
     }
 
@@ -80,7 +80,11 @@ export function getInfoFromJCAMP(metaData, options = {}) {
       maybeAdd(info, 'frequencyOffset', frequencyOffset);
     }
     maybeAddNumber(info, 'spectralWidth', metaData[`${subfix}SW`]);
-    maybeAddNumber(info, 'spectralWidth', metaData[`${subfix}QM_SPECTRAL_WIDTH`]);
+    maybeAddNumber(
+      info,
+      'spectralWidth',
+      metaData[`${subfix}QM_SPECTRAL_WIDTH`],
+    );
 
     maybeAdd(info, 'numberOfPoints', metaData[`${subfix}TD`]);
 
@@ -114,7 +118,7 @@ export function getInfoFromJCAMP(metaData, options = {}) {
           'acquisitionTime',
           Number(
             (numberOfPoints[0] - 1) /
-            (2 * spectralWidth[0] * originFrequency[0]),
+              (2 * spectralWidth[0] * originFrequency[0]),
           ),
         );
       }

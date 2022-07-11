@@ -13,6 +13,8 @@
     "eslint-fix": "npm run eslint -- --fix",
     "compile": "rollup -c",
     "prepublishOnly": "npm run compile",
+    "prettier": "prettier --check src",
+    "prettier-write": "prettier --write src",
     "test": "npm run compile && npm run test-coverage && npm run eslint",
     "test-coverage": "jest --coverage",
     "test-only": "jest",
@@ -63,7 +65,6 @@
   },
   "dependencies": {
     "brukerconverter": "^4.1.0",
-    "filelist-from": "^0.3.0",
     "filelist-utils": "^0.5.0",
     "is-any-array": "^2.0.0",
     "jcampconverter": "^9.0.1",

@@ -34,15 +34,11 @@ describe('test fromJEOL', () => {
     expect(data.dependentVariables[0].components[0]).toHaveLength(419430);
     expect(data.dimensions[0].count).toBe(209715);
     expect(data.dimensions[0].quantityName).toBe('frequency');
-    expect(data.dimensions[0].originOffset.magnitude).toBe(
-      399782198.37825,
-    );
+    expect(data.dimensions[0].originOffset.magnitude).toBe(399782198.37825);
     expect(data.dimensions[0].coordinatesOffset.magnitude).toStrictEqual(
       -598.8915757799654,
     );
-    expect(data.dimensions[0].increment.magnitude).toBe(
-      0.028587359604503898,
-    );
+    expect(data.dimensions[0].increment.magnitude).toBe(0.028587359604503898);
     expect(data.dimensions[0].increment.unit).toBe('Hz');
     expect(data.dimensions[0].reciprocal).toStrictEqual({});
 
