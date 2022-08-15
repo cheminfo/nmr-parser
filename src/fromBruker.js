@@ -23,7 +23,7 @@ export async function fromBruker(zipFile, options = {}) {
   });
   let dataStructure = [];
   for (let entry of parseData) {
-    let metadata = Object.assign({}, entry.info, entry.meta);
+    let metadata = { ...entry.info, ...entry.meta };
     let info = getInfoFromJCAMP(metadata);
 
     let dimensions = [];
@@ -65,7 +65,7 @@ export async function fromBruker(zipFile, options = {}) {
       dimensions,
       dependentVariables,
       source,
-      info: info,
+      info,
       meta: metadata,
       timeStamp: new Date().valueOf(),
       version: packageJson.version,

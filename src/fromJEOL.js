@@ -12,7 +12,7 @@ export function fromJEOL(buffer) {
   let info = parsedData.info;
   let headers = parsedData.headers;
   let parameters = parsedData.parameters;
-  let paramArray = Object.assign({}, parameters.paramArray);
+  let paramArray = { ...parameters.paramArray };
   delete parameters.paramArray;
   let data = parsedData.data;
 
@@ -167,15 +167,14 @@ export function fromJEOL(buffer) {
   let dependentVariables = [];
   dependentVariables.push(formatDependentVariable(data, 11, options));
 
-  let description = Object.assign({}, newInfo);
+  let description = { ...newInfo };
 
   delete description.paramList;
-  description.metadata = Object.assign(
-    {},
-    toKeyValue(headers),
-    toKeyValue(parameters),
-    toKeyValue(paramArray),
-  );
+  description.metadata = {
+    ...toKeyValue(headers),
+    ...toKeyValue(parameters),
+    ...toKeyValue(paramArray),
+  };
 
   let dataStructure = {
     timeStamp: Date.now(),
@@ -186,8 +185,8 @@ export function fromJEOL(buffer) {
       spectralWidthClipped:
         info.spectralWidthClipped[0].magnitude / newInfo.baseFrequency[0],
     },
-    dimensions: dimensions,
-    dependentVariables: dependentVariables,
+    dimensions,
+    dependentVariables,
   };
   return [dataStructure];
 }

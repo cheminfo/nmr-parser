@@ -9,18 +9,14 @@ export function getDigitalFilterParameters(grpdly, dspfvs, decim) {
   let value;
   if (grpdly > 0) {
     value = Number(grpdly);
+  } else if (dspfvs > 14) {
+    value = 0;
+  } else if (!brukerDspTable[dspfvs]) {
+    throw new Error('dspfvs not in lookup table');
   } else {
-    if (dspfvs > 14) {
-      value = 0;
-    } else {
-      if (!brukerDspTable[dspfvs]) {
-        throw new Error('dspfvs not in lookup table');
-      } else {
-        const dspfvsList = brukerDspTable[dspfvs];
-        if (!dspfvsList[decim]) throw new Error('decim not in lookup table');
-        value = dspfvsList[decim];
-      }
-    }
+    const dspfvsList = brukerDspTable[dspfvs];
+    if (!dspfvsList[decim]) throw new Error('decim not in lookup table');
+    value = dspfvsList[decim];
   }
   return value;
 }
