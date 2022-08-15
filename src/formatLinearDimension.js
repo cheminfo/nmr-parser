@@ -9,7 +9,7 @@ export function formatLinearDimension(label, count, increment, options = {}) {
   return {
     label: String(label),
     count: Number(count),
-    increment: increment,
+    increment,
     type: 'linear',
     description: String(options.description) || '',
     application: options.application || {},
