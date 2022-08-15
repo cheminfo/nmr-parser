@@ -88,7 +88,7 @@ let data = fromJEOL(
 
 [npm-image]: https://img.shields.io/npm/v/nmr-parser.svg
 [npm-url]: https://www.npmjs.com/package/nmr-parser
-[ci-image]: https://github.com/cheminfo/nmr-parser/workflows/Node.js%20CI/badge.svg?branch=master
+[ci-image]: https://github.com/cheminfo/nmr-parser/workflows/Node.js%20CI/badge.svg?branch=main
 [ci-url]: https://github.com/cheminfo/nmr-parser/actions?query=workflow%3A%22Node.js+CI%22
 [codecov-image]: https://img.shields.io/codecov/c/github/cheminfo/nmr-parser.svg
 [codecov-url]: https://codecov.io/gh/cheminfo/nmr-parser

@@ -1,6 +1,5 @@
 import { convertFileList } from 'brukerconverter';
-import { fileListFromZip } from 'filelist-from';
-
+import { fileListFromZip } from 'filelist-utils';
 
 import packageJson from '../package.json';
 
@@ -13,15 +12,15 @@ const defaultOptions = {
     noContour: true,
     keepRecordsRegExp: /.*/,
     profiling: true,
-  }
+  },
 };
 
 export async function fromBruker(zipFile, options = {}) {
   const fileList = await fileListFromZip(zipFile);
-  let parseData = await convertFileList(
-    fileList,
-    { ...defaultOptions, ...options },
-  );
+  let parseData = await convertFileList(fileList, {
+    ...defaultOptions,
+    ...options,
+  });
   let dataStructure = [];
   for (let entry of parseData) {
     let metadata = Object.assign({}, entry.info, entry.meta);

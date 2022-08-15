@@ -12,10 +12,11 @@
     "eslint": "eslint src",
     "eslint-fix": "npm run eslint -- --fix",
     "compile": "rollup -c",
-    "prepublishOnly": "npm run compile",
-    "test": "npm run compile && npm run test-coverage && npm run eslint",
-    "test-coverage": "jest --coverage",
-    "test-only": "jest",
+    "prepack": "npm run compile",
+    "prettier": "prettier --check src",
+    "prettier-write": "prettier --write src",
+    "test": "npm run test-only && npm run eslint && npm run prettier",
+    "test-only": "jest --coverage",
     "build": "cheminfo-build --entry src/index.js --root NMRparser"
   },
   "repository": {
@@ -63,7 +64,6 @@
   },
   "dependencies": {
     "brukerconverter": "^4.1.0",
-    "filelist-from": "^0.3.0",
     "filelist-utils": "^0.5.0",
     "is-any-array": "^2.0.0",
     "jcampconverter": "^9.0.1",
