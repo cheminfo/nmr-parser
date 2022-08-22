@@ -18,6 +18,7 @@ export function getDigitalFilterParameters(grpdly, dspfvs, decim) {
     if (!dspfvsList[decim]) throw new Error('decim not in lookup table');
     value = dspfvsList[decim];
   }
+
   return value;
 }
 

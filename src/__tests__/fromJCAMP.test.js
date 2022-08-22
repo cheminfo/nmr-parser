@@ -1,13 +1,10 @@
-import { readFileSync } from 'fs';
-import { join } from 'path';
-
-import { jcamp } from 'jcamp-data-test';
+import { getData } from 'jcamp-data-test';
 
 import { fromJCAMP } from '../fromJCAMP';
 
 describe('test fromJCAMP', () => {
-  it('test fromJCAMP for aspirin (bruker)', () => {
-    let data = fromJCAMP(jcamp['aspirin-1h.fid.dx']);
+  it('test fromJCAMP for aspirin (bruker)', async () => {
+    let data = fromJCAMP(await getData('aspirin-1h.fid.dx'));
     let info = data[0].info;
     expect(info.nucleus[0]).toBe('1H');
     expect(info.title).toBe('1H BBI');
@@ -36,8 +33,8 @@ describe('test fromJCAMP', () => {
     expect(info.acquisitionTime).toBeCloseTo(1.7102808, 5);
   });
 
-  it('test fromJCAMP for ibuprofen (qmagnetics)', () => {
-    let data = fromJCAMP(readFileSync(join(__dirname, 'qmagnetics.jdx')));
+  it('test fromJCAMP for ibuprofen (qmagnetics)', async () => {
+    let data = fromJCAMP(await getData('ibuprofen_j_ave_qmagnetics.jdx'));
     let info = data[0].info;
     expect(info).toStrictEqual({
       dimension: 1,
@@ -60,9 +57,9 @@ describe('test fromJCAMP', () => {
     });
   });
 
-  it('test fromJCAMP for Rutin (Jeol)', () => {
+  it('test fromJCAMP for Rutin (Jeol)', async () => {
     let data = fromJCAMP(
-      jcamp['Rutin_3080ug200uL_DMSOd6_qHNMR_400MHz_JDX.jdx'],
+      await getData('Rutin_3080ug200uL_DMSOd6_qHNMR_400MHz_JDX.jdx'),
     );
     let info = data[0].info;
     expect(info.nucleus[0]).toBe('1H');

@@ -145,7 +145,6 @@ export function fromJEOL(buffer) {
     } else {
       options.description = 'indirect dimension';
     }
-
     dimensions.push(
       formatLinearDimension(
         headers.dataAxisTitles[d],
