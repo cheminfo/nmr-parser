@@ -13,7 +13,7 @@ This package has born from the necessity to find a common data structure for NMR
 - Bruker data foler (as a zip file)
 - JEOL data format (.jdf)
 
-### data formats under developpment
+### data formats under development
 
 - [nmredata](http://nmredata.org/)
 
