@@ -1,5 +1,16 @@
 # Changelog
 
+## [2.0.0](https://github.com/cheminfo/nmr-parser/compare/v1.9.1...v2.0.0) (2022-08-27)
+
+
+### ⚠ BREAKING CHANGES
+
+* add read function to use fileList only (#59)
+
+### Features
+
+* add read function to use fileList only ([#59](https://github.com/cheminfo/nmr-parser/issues/59)) ([4cd204d](https://github.com/cheminfo/nmr-parser/commit/4cd204dd13495e3d009373df5d0db57fcea59f7e))
+
 ## [1.9.1](https://github.com/cheminfo/nmr-parser/compare/v1.9.0...v1.9.1) (2022-08-15)
 
 
