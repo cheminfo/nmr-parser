@@ -3,3 +3,4 @@ export * from './formatLinearDimension';
 export * from './fromJEOL';
 export * from './fromBruker';
 export * from './fromJCAMP';
+export * from './read';
