@@ -94,7 +94,7 @@ function fromReIm(reIm, from, to) {
       throw new Error('check your object');
     }
   } else if (isAnyArray(reIm.re.re)) {
-    dataLength[0] = reIm.re.re.length * 2;
+    dataLength[0] = setLengthComplex(from[1], to[1], reIm.re.re.length);
     let re = fromReIm(reIm.re, from, to).components;
     let im = fromReIm(reIm.im, from, to).components;
     for (let j = 0; j < dataLength[0] / 2; j++) {
@@ -104,7 +104,6 @@ function fromReIm(reIm, from, to) {
   } else {
     throw new Error('check the dimension or the type of data in your array');
   }
-
   return {
     dataLength,
     componentLabels,
