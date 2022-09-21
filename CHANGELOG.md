@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.1](https://github.com/cheminfo/nmr-parser/compare/v2.0.0...v2.0.1) (2022-09-21)
+
+
+### Bug Fixes
+
+* add types file ([#64](https://github.com/cheminfo/nmr-parser/issues/64)) ([8b78f1a](https://github.com/cheminfo/nmr-parser/commit/8b78f1acba11c8c98e04974ac2277adadb1880fc))
+
 ## [2.0.0](https://github.com/cheminfo/nmr-parser/compare/v1.9.1...v2.0.0) (2022-08-27)
 
 
