@@ -5,7 +5,7 @@ import { fromBruker } from '../fromBruker';
 
 describe('testfromBruker', () => {
   it('test fromBruker for aspirin (bruker)', async () => {
-    const brukerZip = await getZipped()
+    const brukerZip = (await getZipped())
       .filter((file) => file.name === 'aspirin-1h.zip')[0]
       .arrayBuffer();
     const fileList = await fileListFromZip(brukerZip);
