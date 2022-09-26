@@ -122,7 +122,7 @@ export function fromJEOL(buffer) {
       let lastPoint = info.dataOffsetStop[0];
       let dataLength = lastPoint - firstPoint + 1;
 
-      let spectralWidth = info.spectralWidth[d].magnitude;
+      let spectralWidth = info.spectralWidthClipped[d].magnitude;
       let incr = spectralWidth / info.dataPoints[d];
       increment = { magnitude: incr, unit: 'Hz' };
 

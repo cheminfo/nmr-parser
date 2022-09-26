@@ -40,7 +40,7 @@ describe('test fromJEOL', () => {
     expect(data.dimensions[0].coordinatesOffset.magnitude).toStrictEqual(
       -598.8915757799654,
     );
-    expect(data.dimensions[0].increment.magnitude).toBe(0.028587359604503898);
+    expect(data.dimensions[0].increment.magnitude).toBe(0.022869887683603124);
     expect(data.dimensions[0].increment.unit).toBe('Hz');
     expect(data.dimensions[0].reciprocal).toStrictEqual({});
 
