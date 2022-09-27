@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.2](https://github.com/cheminfo/nmr-parser/compare/v2.0.1...v2.0.2) (2022-09-27)
+
+
+### Bug Fixes
+
+* **jeol:** use spectralWidthClipped for incr cal. ([e5ee116](https://github.com/cheminfo/nmr-parser/commit/e5ee11676768d5a60433dc6656d9ee1b140df3a8))
+
 ## [2.0.1](https://github.com/cheminfo/nmr-parser/compare/v2.0.0...v2.0.1) (2022-09-21)
 
 
