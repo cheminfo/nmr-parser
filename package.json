@@ -58,7 +58,7 @@
     "cheminfo-build": "^1.1.11",
     "eslint": "^8.22.0",
     "eslint-config-cheminfo": "^8.0.2",
-    "filelist-utils": "^0.7.1",
+    "filelist-utils": "^0.9.1",
     "jcamp-data-test": "^0.3.1",
     "jeol-data-test": "^0.4.1",
     "jest": "^29.0.1",
@@ -70,6 +70,6 @@
     "is-any-array": "^2.0.0",
     "jcampconverter": "^9.0.2",
     "jeolconverter": "^1.0.1",
-    "nmr-processing": "^9.0.3"
+    "nmr-processing": "^9.2.0"
   }
 }
