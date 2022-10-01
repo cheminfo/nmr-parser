@@ -1,4 +1,4 @@
-import { convertFileList } from 'brukerconverter';
+import { convertFileCollection } from 'brukerconverter';
 
 import packageJson from '../package.json';
 
@@ -19,8 +19,8 @@ const defaultOptions = {
   },
 };
 
-export async function fromBruker(fileList, options = {}) {
-  let parseData = await convertFileList(fileList, {
+export async function fromBruker(fileCollection, options = {}) {
+  let parseData = await convertFileCollection(fileCollection, {
     ...defaultOptions,
     ...options,
   });
