@@ -1,5 +1,16 @@
 # Changelog
 
+## [3.0.0](https://github.com/cheminfo/nmr-parser/compare/v2.0.2...v3.0.0) (2022-10-03)
+
+
+### ⚠ BREAKING CHANGES
+
+* use fileCollection (#70)
+
+### Features
+
+* use fileCollection ([#70](https://github.com/cheminfo/nmr-parser/issues/70)) ([efa7b68](https://github.com/cheminfo/nmr-parser/commit/efa7b683c5e9a0b893cbbe28a3ff7ff1e7992c5e))
+
 ## [2.0.2](https://github.com/cheminfo/nmr-parser/compare/v2.0.1...v2.0.2) (2022-09-27)
 
 
