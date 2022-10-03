@@ -1,4 +1,4 @@
-import { PartialFileList } from 'filelist-utils';
+import { FileCollection } from 'filelist-utils';
 
 interface Options {
   base64?: boolean;
@@ -8,7 +8,7 @@ interface Options {
 }
 
 export declare function fromBruker(
-  files: PartialFileList,
+  files: FileCollection,
   options: Partial<Options>,
 ): Promise<Array<any>>;
 

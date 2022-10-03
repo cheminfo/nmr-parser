@@ -1,21 +1,19 @@
-import { getZipped } from 'bruker-data-test';
-import { fileListFromZip } from 'filelist-utils';
+import { getData } from 'bruker-data-test';
+import { fileCollectionFromZip } from 'filelist-utils';
 import { getFile } from 'jeol-data-test';
 
 import { read } from '../read';
 
 describe('global reader', () => {
   it('use bruker and jeol data', async () => {
-    const fileList = await fileListFromZip(
-      (await getZipped())
-        .filter((file) => file.name === 'aspirin-1h.zip')[0]
-        .arrayBuffer(),
+    const fileCollection = await fileCollectionFromZip(
+      await getData('aspirin-1h.zip'),
     );
-    fileList.push(
+    fileCollection.files.push(
       await getFile('Rutin_3080ug200uL_DMSOd6_13CNMR_400MHz_Jeol.jdf'),
     );
 
-    const spectraData = await read(fileList);
+    const spectraData = await read(fileCollection);
     runExpectOfBruker(spectraData[0]);
     runExpectOfJEOL(spectraData[spectraData.length - 1]);
   });
