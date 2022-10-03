@@ -49,11 +49,7 @@ let data = fromJCAMP(await getJcampData('aspirin-1h.fid.dx'));
 import { fromBruker } from 'nmr-parser';
 import { fileCollectionFromPath, fileCollectionFromZip } from 'filelist-utils';
 
-<<<<<<< Updated upstream
-// import burker data
-=======
 // import bruker data
->>>>>>> Stashed changes
 import { getData: getBrukerData } from 'bruker-data-test';
 const PATH_TO_BRUKER_FOLDER = './'
 const fileCollection = fileCollectionFromPath(PATH_TO_BRUKER_FOLDER);
