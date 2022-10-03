@@ -2,15 +2,15 @@ import { fromBruker } from './fromBruker';
 import { fromJCAMP } from './fromJCAMP';
 import { fromJEOL } from './fromJEOL';
 
-export async function read(fileList, options = {}) {
+export async function read(fileCollection, options = {}) {
   const {
     bruker: BrukerOptions = {},
     jcamp: jcampOptions = {},
     jeol: jeolOptions = {},
   } = options;
 
-  const result = await fromBruker(fileList, BrukerOptions);
-  for (const file of fileList) {
+  const result = await fromBruker(fileCollection, BrukerOptions);
+  for (const file of fileCollection) {
     const extension = getFileExtension(file.name);
     let processed = [];
     if (extension === 'jdf') {

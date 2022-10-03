@@ -17,4 +17,9 @@ export declare function fromJCAMP(
   options?: any,
 ): Array<any>;
 
-export declare function fromJEOL(buffer: ArrayBuffer): any;
+export declare function read(
+  fileCollection: FileCollection,
+  options?: any,
+): Array<any>;
+
+export declare function fromJEOL(buffer: ArrayBuffer): Array<any>;
