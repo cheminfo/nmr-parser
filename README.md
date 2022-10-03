@@ -37,9 +37,9 @@ This package has born from the necessity to find a common data structure for NMR
 import { fromJCAMP } from 'nmr-parser';
 
 // import test data
-import { jcamp } from 'jcamp-data-test';
+import { getData: getJcampData } from 'jcamp-data-test';
 
-let data = fromJCAMP(jcamp['aspirin-1h.fid.dx']);
+let data = fromJCAMP(await getJcampData('aspirin-1h.fid.dx'));
 ```
 
 ### Bruker
@@ -47,11 +47,19 @@ let data = fromJCAMP(jcamp['aspirin-1h.fid.dx']);
 ```js
 // import JCAMP parser
 import { fromBruker } from 'nmr-parser';
+import { fileCollectionFromPath, fileCollectionFromZip } from 'filelist-utils';
 
 // import burker data
-import { bruker } from 'bruker-data-test';
+import { getData: getBrukerData } from 'bruker-data-test';
+const PATH_TO_BRUKER_FOLDER = './'
+const fileCollection = fileCollectionFromPath(PATH_TO_BRUKER_FOLDER);
+let data = await fromBruker(fileCollection);
 
-let data = await fromBruker(bruker['aspirin-1h.zip'], { base64: true });
+//or
+
+const zipBuffer = await getBrukerData('aspirin-1h.zip');
+const fileCollection2 = await fileCollectionFromZip(zipBuffer);
+let data2 = await fromBruker(fileCollection2);
 ```
 
 ### JEOL
