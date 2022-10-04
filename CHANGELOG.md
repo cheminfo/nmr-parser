@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.0.1](https://github.com/cheminfo/nmr-parser/compare/v3.0.0...v3.0.1) (2022-10-03)
+
+
+### Bug Fixes
+
+* try publish 3.0.1 vesion ([b1ae6e5](https://github.com/cheminfo/nmr-parser/commit/b1ae6e5cf476023be89a77fda46982461372eb16))
+
 ## [3.0.0](https://github.com/cheminfo/nmr-parser/compare/v2.0.2...v3.0.0) (2022-10-03)
 
 
