@@ -44,7 +44,7 @@ export function fromJCAMP(buffer, options = {}) {
         dependentVariable.components = entry.spectra;
       } else if (info.dimension === 2) {
         entry.minMax.z = convertToFloatArray(entry.minMax.z);
-        dependentVariable.components = entry.minMax;
+        dependentVariable.components = { rr: entry.minMax };
       }
       let dimension = {
         increment: info.increment,

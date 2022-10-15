@@ -37,7 +37,9 @@ export async function fromBruker(fileCollection, options = {}) {
     if (info.dimension === 1) {
       dependentVariable.components = entry.spectra;
     } else if (info.dimension === 2) {
-      entry.minMax.z = convertToFloatArray(entry.minMax.z);
+      for (const key in entry.minMax) {
+        entry.minMax[key].z = convertToFloatArray(entry.minMax[key].z);
+      }
       dependentVariable.components = entry.minMax;
     }
 
