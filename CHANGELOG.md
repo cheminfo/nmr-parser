@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.0.2](https://github.com/cheminfo/nmr-parser/compare/v3.0.1...v3.0.2) (2022-10-21)
+
+
+### Bug Fixes
+
+* **getNucleusFromMeta:** avoid overwrite nucleus ([fa51255](https://github.com/cheminfo/nmr-parser/commit/fa512559d3b76fe1bcd73977078541b62db88ab4))
+
 ## [3.0.1](https://github.com/cheminfo/nmr-parser/compare/v3.0.0...v3.0.1) (2022-10-03)
 
 
