@@ -10,7 +10,7 @@ This package has born from the necessity to find a common data structure for NMR
 ### supported input formats
 
 - JCAMP-DX (may include several spectra)
-- Bruker data foler (as a zip file)
+- Bruker data folder (as a zip file)
 - JEOL data format (.jdf)
 
 ### data formats under development
