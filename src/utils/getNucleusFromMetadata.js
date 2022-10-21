@@ -24,10 +24,12 @@ export function getNucleusFromMetadata(metaData, info, subfix) {
   }
 
   if (metaData['2D_X_NUCLEUS'] && metaData['2D_Y_NUCLEUS']) {
-    nucleus = [
-      metaData['2D_X_NUCLEUS'].replace(/[^A-Za-z0-9]/g, ''),
-      metaData['2D_Y_NUCLEUS'].replace(/[^A-Za-z0-9]/g, ''),
-    ];
+    if (nucleus.length < 2) {
+      nucleus = [
+        metaData['2D_X_NUCLEUS'].replace(/[^A-Za-z0-9]/g, ''),
+        metaData['2D_Y_NUCLEUS'].replace(/[^A-Za-z0-9]/g, ''),
+      ];
+    }
   }
   return nucleus;
 }
